@@ -20,6 +20,7 @@ data class Light(
     val protocol: LightProtocol,
     val controllerId: Long,
     val favourite: LightSetting = LightSetting(),
+    val scenes: List<Scene> = presetScenes,
 ) {
     val address: LightAddress get() = LightAddress(protocol, controllerId)
 }
