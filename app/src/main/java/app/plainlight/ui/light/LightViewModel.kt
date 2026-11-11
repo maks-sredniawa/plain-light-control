@@ -97,6 +97,12 @@ class LightViewModel(
         viewModelScope.launch { preferences.updateLight(lightId) { it.copy(favourite = setting) } }
     }
 
+    fun rename(name: String) {
+        val trimmed = name.trim()
+        if (trimmed.isEmpty()) return
+        viewModelScope.launch { preferences.updateLight(lightId) { it.copy(name = trimmed) } }
+    }
+
     fun applyScene(scene: Scene) =
         withLight { light ->
             preview.value = null

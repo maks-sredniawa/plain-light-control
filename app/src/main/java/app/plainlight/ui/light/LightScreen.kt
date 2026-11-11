@@ -8,9 +8,13 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
@@ -45,10 +49,20 @@ fun LightScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     var confirmRemove by rememberSaveable { mutableStateOf(false) }
+    var renaming by rememberSaveable { mutableStateOf(false) }
     LaunchedEffect(state.removed) { if (state.removed) onBack() }
     val light = state.light ?: return
 
-    DetailScaffold(title = light.name, onBack = onBack, modifier = modifier) { inner ->
+    DetailScaffold(
+        title = light.name,
+        onBack = onBack,
+        modifier = modifier,
+        actions = {
+            IconButton(onClick = { renaming = true }) {
+                Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.light_rename))
+            }
+        },
+    ) { inner ->
         Column(
             modifier = inner.verticalScroll(rememberScrollState()).padding(bottom = Spacing.block),
             verticalArrangement = Arrangement.spacedBy(Spacing.section),
@@ -103,6 +117,19 @@ fun LightScreen(
                 Text(stringResource(R.string.light_remove))
             }
         }
+    }
+
+    if (renaming) {
+        NameDialog(
+            title = stringResource(R.string.light_rename),
+            label = stringResource(R.string.add_light_name),
+            initial = light.name,
+            onConfirm = {
+                renaming = false
+                viewModel.rename(it)
+            },
+            onDismiss = { renaming = false },
+        )
     }
 
     if (confirmRemove) {
