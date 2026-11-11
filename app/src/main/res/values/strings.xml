@@ -39,6 +39,7 @@
     <string name="light_cool">Cool</string>
     <string name="light_remember">Remember this setting</string>
     <string name="light_remember_hint">On always brings back the brightness and colour remembered here.</string>
+    <string name="light_rename">Rename this light</string>
     <string name="light_remove">Remove this light</string>
     <string name="light_remove_confirm_title">Remove %1$s?</string>
     <string name="light_remove_confirm_body">The app forgets this light. The light itself, its remote and its own app keep working.</string>

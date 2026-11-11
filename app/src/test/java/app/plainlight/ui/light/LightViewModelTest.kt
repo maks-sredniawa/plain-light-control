@@ -118,6 +118,16 @@ class LightViewModelTest {
             assertEquals(LightSetting(0.4f, 0.5f), scenes.last().setting)
         }
 
+    @Test
+    fun `a rename is trimmed and a blank one is refused`() =
+        runTest {
+            preferences.saveLight(light)
+            val viewModel = open()
+            viewModel.rename(" ")
+            viewModel.rename("  Kitchen ")
+            viewModel.state.first { it.light?.name == "Kitchen" }
+        }
+
     private suspend fun TestScope.open(): LightViewModel {
         val viewModel = LightViewModel(light.id, preferences, transmitter, lastSent)
         backgroundScope.launch { viewModel.state.collect {} }

@@ -25,6 +25,7 @@
     <string name="light_cool">Zimna</string>
     <string name="light_remember">Zapamiętaj to ustawienie</string>
     <string name="light_remember_hint">Przycisk Włącz zawsze przywraca zapamiętaną tu jasność i barwę.</string>
+    <string name="light_rename">Zmień nazwę światła</string>
     <string name="light_remove">Usuń to światło</string>
     <string name="light_remove_confirm_title">Usunąć %1$s?</string>
     <string name="light_remove_confirm_body">Aplikacja zapomni to światło. Samo światło, jego pilot i jego własna aplikacja będą działać dalej.</string>
