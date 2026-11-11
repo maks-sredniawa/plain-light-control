@@ -221,7 +221,7 @@ class LightViewModelTest {
             val unwatched = LightViewModel(light.id, preferences, transmitter, lastSent)
             unwatched.previewColdness(0.9f)
             unwatched.sendColdness()
-            sentCount.first { it == 2 }
+            lastSent.of(light.id).first { it?.coldness == 0.9f }
             assertEquals(LightCommand.ColourTemperature(0.9f), sent.first())
         }
 
