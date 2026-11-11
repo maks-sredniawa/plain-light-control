@@ -1,17 +1,7 @@
-"""The placeholder mark: the single definition of this app's identity.
+"""The mark: a light bulb with a round hole for its glass, the single definition of this app's identity.
 
-**Replace this file.** It draws a rounded triangle with a hole punched through it — deliberately
-generic, deliberately obviously a placeholder. Both generators import it (`make-launcher-icon.py`
-emits it as `VectorDrawable` path data, `make-feature-graphic.py` rasterises it with PIL), so
-whatever you put here cannot drift into being two different marks.
-
-The way to replace it: draw or generate a concept image, run `python3 art/trace-mark.py <image>`,
-and paste the curves it prints over MARK and HOLE below. Nothing else in the pipeline changes.
-**Commit the concept image beside this file** and record where it came from in `art/README.md`.
-
-**Use art you have the right to ship.** An icon traced from an emoji font, a stock icon or someone
-else's mark is a licence obligation at best and a rejected Play upload at worst. Art you generated
-from your own prompt, or drew, is clean.
+Both generators import it, so the launcher icon, the notification icon and the feature graphic
+cannot drift into being different marks. Provenance: `art/README.md`.
 
 The geometry is two subpaths: the shape, and the hole punched out of it. Coordinates are in
 arbitrary units around an origin at the mark's centre; callers fit them to their own canvas with
@@ -21,19 +11,9 @@ arbitrary units around an origin at the mark's centre; callers fit them to their
 import re
 from dataclasses import dataclass
 
-# The icon's two colours — take both from the app's generated scheme (`scripts/gen_scheme.py`) rather
-# than picking them for the icon, so the identity and the app agree. They are the *only* copy:
-# make-launcher-icon.py writes ic_launcher_background.xml from GROUND, so recolouring the identity is
-# an edit here and a re-run, never a second value somewhere else to keep in step. (It used to be
-# two — this file and a hand-written background drawable — and an app built from the template found
-# them disagreeing the first time its palette moved.)
-#
-# ⚠ **A dark tone of a warm hue is brown.** The first app built from this template tried its
-# `primary` darkened for contrast as the ground and it read as mud; then a gradient, whose middle is
-# the same mud at 44dp. What survived was a flat mid-tone role (`surfaceVariant`) under a light-ish
-# ink (`primary`). Judge the ground at launcher size on a real home screen, light and dark.
-GROUND = (0x2B, 0x4C, 0x7E)  # the icon's flat field — `primary`, darkened for contrast at icon sizes
-MARK_INK = (0xFF, 0xFB, 0xFF)  # the mark on that field — the light scheme's `surface`
+# The only copy of the icon's colours: make-launcher-icon.py writes ic_launcher_background.xml from GROUND.
+GROUND = (0xF9, 0xBE, 0x11)
+MARK_INK = (0x00, 0x36, 0x3C)
 
 
 @dataclass(frozen=True)
@@ -51,20 +31,21 @@ class Subpath:
     hole: bool = False
 
 
-# A rounded triangle pointing right. One outer contour.
 MARK = (
-    "M-27.48,-73.6"
-        "C-39.92,-80.78 -50,-74.96 -50,-60.6C-50,-20.2 -50,20.2 -50,60.6"
-        "C-50,74.96 -39.92,80.78 -27.48,73.6C7.51,53.4 42.49,33.2 77.48,13"
-        "C89.92,5.82 89.92,-5.82 77.48,-13C42.49,-33.2 7.51,-53.4 -27.48,-73.6"
+    "M-33.46,21.16"
+        "C-48.84,7.31 -54.1,-14.59 -46.68,-33.92C-39.26,-53.24 -20.7,-66 -0,-66"
+        "C20.7,-66 39.26,-53.24 46.68,-33.92C54.1,-14.59 48.84,7.31 33.46,21.16"
+        "C25.28,28.52 25,26.16 25,36.16C25,44.44 25,52.72 25,61"
+        "C25,65.97 20.97,70 16,70C5.33,70 -5.33,70 -16,70"
+        "C-20.97,70 -25,65.97 -25,61C-25,52.72 -25,44.44 -25,36.16"
+        "C-25,26.16 -25.28,28.52 -33.46,21.16"
         "Z"
 )
 
-# The hole punched through it.
 HOLE = (
-    "M20,0"
-        "C20,14.36 8.36,26 -6,26C-20.36,26 -32,14.36 -32,0"
-        "C-32,-14.36 -20.36,-26 -6,-26C8.36,-26 20,-14.36 20,0"
+    "M29,-16"
+        "C29,0.02 16.02,13 0,13C-16.02,13 -29,0.02 -29,-16"
+        "C-29,-32.02 -16.02,-45 -0,-45C16.02,-45 29,-32.02 29,-16"
         "Z"
 )
 

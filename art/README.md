@@ -6,7 +6,7 @@ the `VectorDrawable`s.
 
 | Asset | Source | State |
 | --- | --- | --- |
-| `mark.py`'s MARK and HOLE curves | your concept image → `trace-mark.py` | **placeholder — replace** |
+| `mark.py`'s MARK and HOLE curves | drawn as geometry (see Provenance), not traced | chosen 2026-11-11: concept B, *Bulb* |
 | `concept.png` | the image the mark was traced from — **commit it**, with its provenance below | — |
 | `drawable/ic_launcher_{background,foreground,monochrome}.xml`, `drawable/ic_notification.xml`, `mipmap-*`, `play-icon-512.png` | `mark.py` → `make-launcher-icon.py` | generated |
 | `play-feature-graphic.png`, `play-feature-graphic-<tag>.png` (1024×500, one per translated listing; `COPY`) | `mark.py` + `theme/Color.kt` (+ `feature-background.png` if present) → `make-feature-graphic.py` | generated |
@@ -17,8 +17,6 @@ the `VectorDrawable`s.
 `mark.py` is the single definition, as **two cubic subpaths** — the silhouette and a hole punched
 out of it. Both generators import it, so the launcher icon, the notification icon and the feature
 graphic cannot drift into being different marks.
-
-What ships today is a rounded triangle: deliberately generic, deliberately obviously a placeholder.
 
 - **Recolouring is two values in `mark.py` and a re-run**: `GROUND` (the icon's field) and
   `MARK_INK` (the mark on it). `make-launcher-icon.py` writes every drawable from them, the
@@ -91,5 +89,5 @@ it came from in the provenance table below, like the concept image.
 
 | File | Where it came from | Licence / terms |
 | --- | --- | --- |
-| `concept.png` | *(your drawing, or an image model and whose prompt)* | |
+| `concept.png` | drawn by Claude Code from circles, arcs and fillets in a throwaway script, no traced image, font or stock art; owner chose it from three concepts on 2026-11-11 | the owner's, no third-party terms |
 | `feature-background.png` | *(if used)* | |
