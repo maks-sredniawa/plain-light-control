@@ -17,10 +17,10 @@ is the one with the widest reach.
 import sys
 from hct import TonalPalette, argb_from_hex, hex_from_argb, xyz_from_argb
 
-SEED_PRIMARY = "4C6FA5"    # Slate blue
-SEED_SECONDARY = "6B7A8F"  # Muted steel
-SEED_TERTIARY = "9A6BA5"   # Heather
-SEED_NEUTRAL = "DCDFE4"    # Cool grey
+SEED_PRIMARY = "006A71"    # Teal
+SEED_SECONDARY = "4F6366"  # Grey teal
+SEED_TERTIARY = "F9BE11"   # Lamp yellow, the icon's own
+SEED_NEUTRAL = "F4EFE6"    # Warm paper
 
 PACKAGE = "app.plainlight"  # the Kotlin package root; bootstrap.py rewrites this
 
