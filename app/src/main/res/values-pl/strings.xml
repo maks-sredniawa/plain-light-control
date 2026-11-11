@@ -85,7 +85,7 @@
     <string name="lights_tip_ask_decline">Nie, dziękuję</string>
 
     <string name="settings_simple_mode">Tryb prosty</string>
-    <string name="settings_simple_mode_hint">Ekran światła pokazuje tylko Włącz, Wyłącz i jasność. Wyłącz ten tryb, aby mieć też barwę, sceny, wyłącznik czasowy, zmianę nazwy i usuwanie.</string>
+    <string name="settings_simple_mode_hint">Włącz ten tryb, aby ekran światła pokazywał tylko Włącz, Wyłącz i jasność. Gdy jest wyłączony, ekran ma też barwę, sceny, wyłącznik czasowy, zmianę nazwy i usuwanie.</string>
     <string name="settings_appearance">Wygląd</string>
     <string name="settings_theme_system">Systemowy</string>
     <string name="settings_theme_light">Jasny</string>
