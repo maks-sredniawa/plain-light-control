@@ -14,10 +14,16 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.withTimeoutOrNull
 import java.util.UUID
 import kotlin.coroutines.resume
 
-private const val ADVERTISE_MILLIS = 1_000L
+private const val ADVERTISE_MILLIS = 750L
+
+/** Some Bluetooth stacks answer neither success nor failure; without a limit the send, and every send queued behind it, waits forever. */
+private const val START_TIMEOUT_MILLIS = 3_000L
+
+const val FAILED_START_TIMEOUT = -1
 
 class BleLightTransmitter(
     context: Context,
@@ -57,20 +63,22 @@ class BleLightTransmitter(
                 .build()
         var callback: AdvertiseCallback? = null
         val started =
-            suspendCancellableCoroutine { continuation ->
-                callback =
-                    object : AdvertiseCallback() {
-                        override fun onStartSuccess(settingsInEffect: AdvertiseSettings) {
-                            if (continuation.isActive) continuation.resume(SendResult.Sent)
-                        }
+            withTimeoutOrNull(START_TIMEOUT_MILLIS) {
+                suspendCancellableCoroutine<SendResult> { continuation ->
+                    callback =
+                        object : AdvertiseCallback() {
+                            override fun onStartSuccess(settingsInEffect: AdvertiseSettings) {
+                                if (continuation.isActive) continuation.resume(SendResult.Sent)
+                            }
 
-                        override fun onStartFailure(errorCode: Int) {
-                            if (continuation.isActive) continuation.resume(SendResult.Failed(errorCode))
+                            override fun onStartFailure(errorCode: Int) {
+                                if (continuation.isActive) continuation.resume(SendResult.Failed(errorCode))
+                            }
                         }
-                    }
-                advertiser.startAdvertising(settings, data, callback)
-                continuation.invokeOnCancellation { advertiser.stopAdvertising(callback) }
-            }
+                    advertiser.startAdvertising(settings, data, callback)
+                    continuation.invokeOnCancellation { advertiser.stopAdvertising(callback) }
+                }
+            } ?: SendResult.Failed(FAILED_START_TIMEOUT)
         if (started == SendResult.Sent) {
             try {
                 delay(ADVERTISE_MILLIS)

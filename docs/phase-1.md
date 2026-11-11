@@ -21,7 +21,7 @@ vendor app is itself an Android app emitting the same bytes.
 | | Checkpoint | Merges | Depends on |
 | --- | --- | --- | --- |
 | **A** | **The codec** — `ble/LightCodec.kt`, a port of `zhimei_v1`/`zhimei_v2` from NicoIIT/ha-ble-adv (MIT, 7b40e85), pinned by `LightCodecTest` | `feat:` | phase 0 |
-| **B** | **Sending** — `BleLightTransmitter`: one legacy, non-connectable advertisement per command for 750 ms (ha-ble-adv's default duration), serialised by a lock | `feat:` | A |
+| **B** | **Sending** — `BleLightTransmitter`: one legacy, non-connectable advertisement per command for 750 ms (ha-ble-adv's default duration), serialised by a lock; a start the stack never answers fails after 3 s (found on the small-api30 emulator, which hung on *Pairing…*) | `feat:` | A |
 | **C** | **The lights list** — JSON under one DataStore key (`AppPreferences.lights`), kept by *Restore defaults* | `feat:` | — |
 | **D** | **Add a light** — pair, blink, ask | `feat:` | B, C |
 | **E** | **Simple mode** — On, Off, brightness, colour, *Remember this setting*, remove | `feat:` | B, C |
