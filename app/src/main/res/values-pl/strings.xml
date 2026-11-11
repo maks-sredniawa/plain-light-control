@@ -13,6 +13,7 @@
 
     <string name="action_back">Wstecz</string>
     <string name="action_cancel">Anuluj</string>
+    <string name="action_save">Zapisz</string>
 
     <string name="lights_empty">Nie dodano jeszcze żadnych świateł.</string>
     <string name="lights_add">Dodaj światło</string>
@@ -28,6 +29,17 @@
     <string name="light_remove_confirm_title">Usunąć %1$s?</string>
     <string name="light_remove_confirm_body">Aplikacja zapomni to światło. Samo światło, jego pilot i jego własna aplikacja będą działać dalej.</string>
     <string name="light_remove_confirm">Usuń</string>
+    <string name="light_scenes">Sceny</string>
+    <string name="light_scene_evening">Wieczór</string>
+    <string name="light_scene_reading">Czytanie</string>
+    <string name="light_scene_night_light">Lampka nocna</string>
+    <string name="light_scene_save">Zapisz jako scenę</string>
+    <string name="light_scene_save_hint">Zachowuje powyższą jasność i barwę pod wybraną przez ciebie nazwą. Scena włącza światło z tymi ustawieniami.</string>
+    <string name="light_scene_name">Nazwa sceny</string>
+    <string name="light_scene_delete">Usuń scenę „%1$s”</string>
+    <string name="light_scene_delete_confirm_title">Usunąć scenę „%1$s”?</string>
+    <string name="light_scene_delete_confirm_body">Nie wróci sama, nawet jeśli była w aplikacji od początku.</string>
+    <string name="light_scene_delete_confirm">Usuń</string>
     <string name="add_light_name">Nazwa</string>
     <string name="add_light_name_default">Lampa</string>
     <string name="add_light_step_power">1. Wyłącz światło włącznikiem na ścianie, odczekaj 5 sekund i włącz je ponownie.</string>

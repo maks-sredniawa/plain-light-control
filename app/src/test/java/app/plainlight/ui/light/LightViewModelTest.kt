@@ -9,6 +9,7 @@ import app.plainlight.data.AppPreferences
 import app.plainlight.data.LastSent
 import app.plainlight.data.Light
 import app.plainlight.data.LightSetting
+import app.plainlight.data.presetScenes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -77,6 +78,44 @@ class LightViewModelTest {
         runTest {
             preferences.saveLight(light)
             assertEquals(light.favourite, open().state.value.setting)
+        }
+
+    @Test
+    fun `applying a scene sends On, colour, then brightness and records it as last sent`() =
+        runTest {
+            preferences.saveLight(light)
+            val viewModel = open()
+            val evening = presetScenes.first()
+            viewModel.applyScene(evening)
+            lastSent.of(light.id).first { it == evening.setting }
+            assertEquals(
+                listOf(
+                    LightCommand.On,
+                    LightCommand.ColourTemperature(evening.setting.coldness),
+                    LightCommand.Brightness(evening.setting.brightness),
+                ),
+                sent.toList(),
+            )
+            viewModel.state.first { it.setting == evening.setting }
+        }
+
+    @Test
+    fun `a saved scene keeps the sliders' values, and a deleted preset stays deleted`() =
+        runTest {
+            preferences.saveLight(light)
+            val viewModel = open()
+            viewModel.previewBrightness(0.4f)
+            viewModel.saveScene("  Film  ")
+            viewModel.state.first { s -> s.light?.scenes?.any { it.name == "Film" } == true }
+            viewModel.saveScene(" ")
+            viewModel.deleteScene(presetScenes.first().id)
+            val scenes =
+                viewModel.state
+                    .first { s -> s.light?.scenes?.size == 3 }
+                    .light!!
+                    .scenes
+            assertEquals(presetScenes.drop(1), scenes.dropLast(1))
+            assertEquals(LightSetting(0.4f, 0.5f), scenes.last().setting)
         }
 
     private suspend fun TestScope.open(): LightViewModel {

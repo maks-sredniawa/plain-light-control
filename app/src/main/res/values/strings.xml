@@ -26,6 +26,7 @@
     <!-- Common actions -->
     <string name="action_back">Back</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_save">Save</string>
 
     <!-- Lights -->
     <string name="lights_empty">No lights have been added yet.</string>
@@ -42,6 +43,18 @@
     <string name="light_remove_confirm_title">Remove %1$s?</string>
     <string name="light_remove_confirm_body">The app forgets this light. The light itself, its remote and its own app keep working.</string>
     <string name="light_remove_confirm">Remove</string>
+    <!-- A scene: a named brightness and colour for one light. The three ready-made ones are labelled by these strings, so they follow the app's language -->
+    <string name="light_scenes">Scenes</string>
+    <string name="light_scene_evening">Evening</string>
+    <string name="light_scene_reading">Reading</string>
+    <string name="light_scene_night_light">Night light</string>
+    <string name="light_scene_save">Save as a scene</string>
+    <string name="light_scene_save_hint">Keeps the brightness and colour above under a name you choose. A scene switches the light on with them.</string>
+    <string name="light_scene_name">Scene name</string>
+    <string name="light_scene_delete">Delete the scene “%1$s”</string>
+    <string name="light_scene_delete_confirm_title">Delete the scene “%1$s”?</string>
+    <string name="light_scene_delete_confirm_body">It will not come back by itself, even if it came with the app.</string>
+    <string name="light_scene_delete_confirm">Delete</string>
     <string name="add_light_name">Name</string>
     <string name="add_light_name_default">Lamp</string>
     <string name="add_light_step_power">1. Switch the light off at the wall switch, wait 5 seconds, then switch it on again.</string>

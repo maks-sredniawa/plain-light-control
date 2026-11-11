@@ -12,6 +12,7 @@ import app.plainlight.data.AppPreferences
 import app.plainlight.data.LastSent
 import app.plainlight.data.Light
 import app.plainlight.data.LightSetting
+import app.plainlight.data.Scene
 import app.plainlight.ui.lights.ifSent
 import app.plainlight.ui.lights.sendAll
 import app.plainlight.ui.lights.switchOn
@@ -23,6 +24,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 data class LightUiState(
     val light: Light? = null,
@@ -91,9 +93,28 @@ class LightViewModel(
         }
 
     fun remember() {
+        val setting = current()
+        viewModelScope.launch { preferences.updateLight(lightId) { it.copy(favourite = setting) } }
+    }
+
+    fun applyScene(scene: Scene) =
+        withLight { light ->
+            preview.value = null
+            transmitter.switchOn(light, scene.setting, lastSent)
+        }
+
+    fun saveScene(name: String) {
+        val trimmed = name.trim()
+        if (trimmed.isEmpty()) return
+        val scene = Scene(UUID.randomUUID().toString(), name = trimmed, setting = current())
+        viewModelScope.launch { preferences.updateLight(lightId) { it.copy(scenes = it.scenes + scene) } }
+    }
+
+    fun deleteScene(sceneId: String) {
         viewModelScope.launch {
-            val light = light() ?: return@launch
-            preferences.saveLight(light.copy(favourite = current()))
+            preferences.updateLight(
+                lightId,
+            ) { light -> light.copy(scenes = light.scenes.filterNot { it.id == sceneId }) }
         }
     }
 

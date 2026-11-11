@@ -93,6 +93,12 @@ fun LightScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
+            ScenesSection(
+                scenes = light.scenes,
+                onApply = viewModel::applyScene,
+                onSave = viewModel::saveScene,
+                onDelete = { viewModel.deleteScene(it.id) },
+            )
             TextButton(onClick = { confirmRemove = true }, modifier = Modifier.padding(horizontal = Spacing.base)) {
                 Text(stringResource(R.string.light_remove))
             }
