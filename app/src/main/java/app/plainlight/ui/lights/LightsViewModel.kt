@@ -63,6 +63,8 @@ class LightsViewModel(
 
     fun switchOff(light: Light) = report { transmitter.send(light.address, LightCommand.Off) }
 
+    fun switchAllOff() = report { transmitter.switchAllOff(preferences.lights.first()) }
+
     fun dismissProblem() {
         problem.value = null
     }

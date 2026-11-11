@@ -25,6 +25,10 @@ suspend fun LightTransmitter.switchOn(
         LightCommand.Brightness(setting.brightness),
     ).ifSent { lastSent.update(light) { setting } }
 
+/** Off goes to every light even after one fails, and the first problem is what is reported. */
+suspend fun LightTransmitter.switchAllOff(lights: List<Light>): SendResult =
+    lights.map { send(it.address, LightCommand.Off) }.firstOrNull { it != SendResult.Sent } ?: SendResult.Sent
+
 inline fun SendResult.ifSent(record: () -> Unit): SendResult = also { if (it == SendResult.Sent) record() }
 
 suspend fun LightTransmitter.sendAll(
