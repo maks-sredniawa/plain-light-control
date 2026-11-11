@@ -14,17 +14,13 @@ per phase, no task lists. The detail is written when the phase opens, not now. T
 was extracted from and the first app built from it settled on exactly this split independently.
 [`phase-template.md`](phase-template.md) is the shape a phase file settled into; copy it on the day.
 
-<!--
-    A skeleton. Replace the phases with yours; keep the four rules at the bottom unless you have a
-    reason, because each of them was paid for by an app built from this template.
--->
-
 ## Status
 
-- [ ] **Phase 0** — Skeleton: the placeholder domain gone, the palette and the mark chosen
+- [ ] **Phase 0** — The lamp is known, and the template is cut down to the app ([`phase-0.md`](phase-0.md)) ← **open**
 - [ ] **Phase P** — The pipeline: repository setup, upload key, Play entry, secrets, a green internal upload
-- [ ] **Phase 1** — *(the smallest version of the app's one mechanism, working on the phone)*
-- [ ] **Phase 2** — *(safe to hand to a stranger)* ← **the door: closed testing opens here**
+- [ ] **Phase 1** — One light switched on and off and dimmed from the phone, in a simple screen
+- [ ] **Phase 2** — Every light in one place, its settings kept per light ← **the door: closed testing opens here**
+- [ ] **Phase 3** — The dashboard
 - [ ] **Phase N** — Ship shape: listing, screenshots, the App content answers
 
 ---
@@ -106,14 +102,39 @@ introduces the behaviour owns saying so.
 
 ---
 
-## Phase 0 — Skeleton
+## Phase 0 — The lamp is known
 
-*(one paragraph)*
+The whole app turns on one fact nobody has written down yet: which lamp, and whether the phone can
+reach it without the vendor's app and account. Its gate names three verdicts (local Wi-Fi API,
+Bluetooth only, cloud only) and what each does to permissions, `minSdk` and ADR-0007. Alongside it the
+template loses Room, photos, backup and reminders, and gets its palette and mark.
 
 ## Phase P — The pipeline
 
-*(one paragraph — `DOD.md`'s "Before the first upload" is most of it)*
+`DOD.md`'s "Before the first upload" is most of it. Independent of the lamp, so it can run while
+Phase 0's gate waits on an answer.
+
+## Phase 1 — One light
+
+The idea's first version: one light, on, off and brightness, in Simple mode, on the phone, sent as
+BLE advertisements the way her remote does (Phase 0's verdict). It opens on the gate Phase 0 could not
+take from a desk: which `zhimei` variant her lamp pairs with, read on a real phone beside it. Its
+hardest screen is *Add a light*: the switch-off-and-on pairing window, explained to someone who isn't
+technical.
+
+## Phase 2 — Every light, kept per light
+
+More than one light, each with its own name and settings kept. Nothing is read back from a lamp:
+this one only listens. Safe to hand to a
+stranger: the mail hand-off live, every denial said on screen (rule 4). Closed testing opens after it.
+
+## Phase 3 — The dashboard
+
+A light added to a separate personal dashboard. Whatever the dashboard is, it has to be in Bluetooth
+range of the lamp: this app on a second device, or a bridge. Decided when this phase opens.
 
 ## Not in this plan
 
-*(what the app will deliberately never do, so a phase cannot quietly grow it back)*
+- An account, ads, or a backend of our own.
+- Lights from every vendor. The app supports what Phase 0's verdict names; another vendor is a new
+  decision, not a quiet addition.
