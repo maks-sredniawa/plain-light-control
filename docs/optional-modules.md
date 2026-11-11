@@ -22,8 +22,8 @@ checklist rather than a discovery.
 - **A fixed set is plain DataStore keys**, however many members it has: four schedule options are
   settings, and seven per-day windows are fourteen settings.
 - **A small list the user makes is JSON under one DataStore key**, read whole and written whole. Its
-  migration story is the decoder's tolerance: unknown keys ignored, a default on every field added
-  later, and one unreadable entry dropped rather than the whole list. The template's `AppBackupAgent`
+  migration story is the decoder's tolerance: unknown keys ignored when read and kept when written,
+  a default on every field added later, and one unreadable entry dropped rather than the whole list. The template's `AppBackupAgent`
   leaves the store out of backups; once Auto Backup takes over (*Backup export/restore* below) the
   list reaches the user's next phone with every other key, which is right for anything that is
   really a setting. The first app built from this template keeps its saved presets this way rather
