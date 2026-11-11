@@ -27,6 +27,7 @@ enum class AddLightStep {
     INSTRUCTIONS,
     PAIRING,
     CHECK,
+    SAVING,
     FAILED,
     DONE,
 }
@@ -35,6 +36,7 @@ data class AddLightUiState(
     val step: AddLightStep = AddLightStep.INSTRUCTIONS,
     val attempt: Int = 0,
     val problem: SendResult? = null,
+    val permissionJustGranted: Boolean = false,
 )
 
 /**
@@ -53,7 +55,7 @@ class AddLightViewModel(
 
     fun pair() {
         viewModelScope.launch {
-            _state.update { it.copy(step = AddLightStep.PAIRING, problem = null) }
+            _state.update { it.copy(step = AddLightStep.PAIRING, problem = null, permissionJustGranted = false) }
             val result = sendBlink()
             _state.update {
                 if (result ==
@@ -67,11 +69,18 @@ class AddLightViewModel(
         }
     }
 
+    /** The permission dialog outlasts the lamp's pairing window, so the wall-switch step comes again rather than a pair now. */
+    fun permissionGranted() {
+        _state.update { it.copy(problem = null, permissionJustGranted = true) }
+    }
+
     fun permissionDenied() {
         _state.update { it.copy(problem = SendResult.PermissionMissing) }
     }
 
     fun confirm(name: String) {
+        if (_state.value.step != AddLightStep.CHECK) return
+        _state.update { it.copy(step = AddLightStep.SAVING) }
         viewModelScope.launch {
             preferences.saveLight(Light(UUID.randomUUID().toString(), name, address.protocol, controllerId))
             _state.update { it.copy(step = AddLightStep.DONE) }

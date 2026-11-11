@@ -37,6 +37,7 @@
     <string name="add_light_check">Czy światło zgasło i zapaliło się ponownie?</string>
     <string name="add_light_yes">Tak</string>
     <string name="add_light_no">Nie</string>
+    <string name="add_light_after_permission">Gotowe. Światło nasłuchuje tylko przez kilka sekund po włączeniu, więc jeszcze raz wyłącz i włącz je włącznikiem na ścianie, a potem dotknij Sparuj.</string>
     <string name="add_light_retry">Spróbujmy inaczej. Jeszcze raz wyłącz i włącz światło włącznikiem na ścianie, a potem dotknij Sparuj.</string>
     <string name="add_light_failed">Światło nie odpowiedziało. Sprawdź, czy jest kilka metrów od telefonu i czy działa z własną aplikacją, a potem spróbuj ponownie.</string>
     <string name="add_light_try_again">Zacznij od nowa</string>

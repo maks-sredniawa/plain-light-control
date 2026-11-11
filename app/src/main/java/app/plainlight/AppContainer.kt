@@ -10,6 +10,7 @@ import app.plainlight.ble.BleLightTransmitter
 import app.plainlight.ble.LightCodec
 import app.plainlight.ble.LightTransmitter
 import app.plainlight.data.AppPreferences
+import app.plainlight.data.LastSent
 import app.plainlight.tip.TipJar
 import kotlinx.coroutines.CoroutineScope
 import java.time.Instant
@@ -54,6 +55,9 @@ class AppContainer(
 
     /** One instance, so its sequence counter and its lock span every screen. */
     val transmitter: LightTransmitter = BleLightTransmitter(appContext, LightCodec::encode)
+
+    /** Here so a light's screen, reopened, shows what was sent from its last visit. */
+    val lastSent = LastSent()
 
     /** When this package was first installed on this phone — the tip ask's clock, not a restore's. */
     val installedAt: Instant by lazy {

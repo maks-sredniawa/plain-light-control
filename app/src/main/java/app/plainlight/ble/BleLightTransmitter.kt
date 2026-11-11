@@ -17,6 +17,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.UUID
 import kotlin.coroutines.resume
+import kotlin.random.Random
 
 private const val ADVERTISE_MILLIS = 750L
 
@@ -31,7 +32,9 @@ class BleLightTransmitter(
 ) : LightTransmitter {
     private val appContext = context.applicationContext
     private val mutex = Mutex()
-    private var sequence = 0
+
+    /** A lamp may drop a frame identical to the last one it heard, so a cold start must not replay the previous process's first number. */
+    private var sequence = Random.nextInt(0x100)
 
     override suspend fun send(
         address: LightAddress,

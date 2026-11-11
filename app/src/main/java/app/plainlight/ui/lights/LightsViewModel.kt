@@ -11,6 +11,7 @@ import app.plainlight.ble.LightCommand
 import app.plainlight.ble.LightTransmitter
 import app.plainlight.ble.SendResult
 import app.plainlight.data.AppPreferences
+import app.plainlight.data.LastSent
 import app.plainlight.data.Light
 import app.plainlight.tip.TipJar
 import app.plainlight.tip.tipAskDue
@@ -34,6 +35,7 @@ data class LightsUiState(
 class LightsViewModel(
     private val preferences: AppPreferences,
     private val transmitter: LightTransmitter,
+    private val lastSent: LastSent,
     tipJar: TipJar,
     installedAt: Instant,
 ) : ViewModel() {
@@ -57,7 +59,7 @@ class LightsViewModel(
         }
     }
 
-    fun switchOn(light: Light) = report { transmitter.switchOn(light) }
+    fun switchOn(light: Light) = report { transmitter.switchOn(light, lastSent) }
 
     fun switchOff(light: Light) = report { transmitter.send(light.address, LightCommand.Off) }
 
@@ -82,6 +84,7 @@ class LightsViewModel(
                     LightsViewModel(
                         preferences = app.container.preferences,
                         transmitter = app.container.transmitter,
+                        lastSent = app.container.lastSent,
                         tipJar = app.container.tipJar,
                         installedAt = app.container.installedAt,
                     )
