@@ -60,11 +60,11 @@ class AppPreferencesTest {
         }
 
     @Test
-    fun `simple mode is on until it is switched off`() =
+    fun `simple mode is off until it is switched on`() =
         runBlocking {
-            assertTrue(preferences.simpleMode.first())
-            preferences.setSimpleMode(false)
             assertFalse(preferences.simpleMode.first())
+            preferences.setSimpleMode(true)
+            assertTrue(preferences.simpleMode.first())
         }
 
     @Test
@@ -73,7 +73,7 @@ class AppPreferencesTest {
             with(preferences) {
                 setThemeMode(ThemeMode.DARK)
                 setMaterialYou(true)
-                setSimpleMode(false)
+                setSimpleMode(true)
                 setOnboardingDone(true)
                 markTipAsked()
 
@@ -81,7 +81,7 @@ class AppPreferencesTest {
 
                 assertEquals(ThemeMode.SYSTEM, themeMode.first())
                 assertFalse(materialYou.first())
-                assertTrue(simpleMode.first())
+                assertFalse(simpleMode.first())
                 assertTrue(onboardingDone.first())
                 assertTrue(tipAsked.first())
             }

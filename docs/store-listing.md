@@ -144,7 +144,7 @@ Dodaj swoją lampę sufitową i steruj nią z telefonu: włączanie, wyłączani
 **English** — 332/500:
 
 ```
-Every light now has scenes: Evening, Reading and Night light come ready-made, and you can save your own. Rename a light, ask it to switch itself off in one or two hours, and switch all your lights off at once. Simple mode, on by default, keeps a light's screen to On, Off and brightness; turn it off in Settings for everything else.
+Every light now has scenes: Evening, Reading and Night light come ready-made, and you can save your own. Rename a light, ask it to switch itself off in one or two hours, and switch all your lights off at once. Simple mode keeps a light's screen to On, Off and brightness; turn it on in Settings for whoever needs it plain.
 ```
 
 **Polish** — 344/500:

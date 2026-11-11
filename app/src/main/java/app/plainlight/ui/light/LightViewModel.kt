@@ -35,7 +35,7 @@ data class LightUiState(
     val removed: Boolean = false,
     /** What the light was last asked to switch off in. The lamp keeps the time and cannot say whether it is counting. */
     val timerHours: Int? = null,
-    val simpleMode: Boolean = true,
+    val simpleMode: Boolean = false,
 )
 
 private data class ScreenState(
