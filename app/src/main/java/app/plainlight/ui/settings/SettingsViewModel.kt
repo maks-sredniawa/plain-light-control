@@ -19,13 +19,14 @@ import kotlinx.coroutines.launch
 data class SettingsUiState(
     val themeMode: ThemeMode = ThemeMode.SYSTEM,
     val materialYou: Boolean = false,
+    val simpleMode: Boolean = true,
 )
 
 class SettingsViewModel(
     private val preferences: AppPreferences,
 ) : ViewModel() {
     val state: StateFlow<SettingsUiState> =
-        combine(preferences.themeMode, preferences.materialYou, ::SettingsUiState)
+        combine(preferences.themeMode, preferences.materialYou, preferences.simpleMode, ::SettingsUiState)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SettingsUiState())
 
     /**
@@ -39,6 +40,10 @@ class SettingsViewModel(
     fun setThemeMode(mode: ThemeMode) {
         applyThemeMode(mode)
         viewModelScope.launch { preferences.setThemeMode(mode) }
+    }
+
+    fun setSimpleMode(enabled: Boolean) {
+        viewModelScope.launch { preferences.setSimpleMode(enabled) }
     }
 
     fun setMaterialYou(enabled: Boolean) {

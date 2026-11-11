@@ -46,12 +46,14 @@ class AppPreferences(
         val ONBOARDING_DONE = booleanPreferencesKey("onboarding_done")
         val TIP_ASKED = booleanPreferencesKey("tip_asked")
         val LIGHTS = stringPreferencesKey("lights")
+        val SIMPLE_MODE = booleanPreferencesKey("simple_mode")
 
         /** What *Restore to default* removes: everything the user chose, so each reads its default again. */
         val SETTINGS: List<Preferences.Key<*>> =
             listOf(
                 THEME_MODE,
                 MATERIAL_YOU,
+                SIMPLE_MODE,
             )
 
         /**
@@ -95,6 +97,12 @@ class AppPreferences(
      * carries it to the next phone (ADR-0005), so an answer given once is not asked for again there.
      */
     val tipAsked: Flow<Boolean> = store.data.map { it[Keys.TIP_ASKED] ?: false }
+
+    /**
+     * Whether a light's screen shows only On, Off and brightness. Defaults **on**: the person who
+     * uses the lights every day is not necessarily the one who set the app up.
+     */
+    val simpleMode: Flow<Boolean> = store.data.map { it[Keys.SIMPLE_MODE] ?: true }
 
     /** The user's lights, as a list rather than a table (`docs/optional-modules.md`, *How to decide*). */
     val lights: Flow<List<Light>> = store.data.map { decodeLights(it[Keys.LIGHTS]) }
@@ -155,6 +163,10 @@ class AppPreferences(
 
     suspend fun setMaterialYou(enabled: Boolean) {
         store.edit { it[Keys.MATERIAL_YOU] = enabled }
+    }
+
+    suspend fun setSimpleMode(enabled: Boolean) {
+        store.edit { it[Keys.SIMPLE_MODE] = enabled }
     }
 
     suspend fun setOnboardingDone(done: Boolean) {
