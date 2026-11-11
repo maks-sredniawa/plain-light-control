@@ -53,3 +53,14 @@ else — and "missing media renders as a placeholder" already covers the other d
 - The crop is blind: there is no crop-and-zoom UI, so re-picking is the user's only recourse. Keep
   the crop centred and predictable.
 - Nothing upscales. A 300 px source is stored at 300 px, not blown up with invented pixels.
+
+## Amendment, 2026-11-11: no media, so no pipeline
+
+Plain Light keeps no pictures, so `media/MediaFiles.kt`, the `FileProvider`, Coil and `exifinterface`
+were deleted before the first upload ([`optional-modules.md`](../optional-modules.md)). The privacy
+policy's photo and camera bullets and Data safety's photo point went in the same change.
+`aab-permissions.py` still forbids `CAMERA`, because a dependency that merges it changes the listing
+whether or not the app takes pictures.
+
+A feature that stores an image later brings this decision back as written: file first, re-encoded
+per kind, metadata stripped.

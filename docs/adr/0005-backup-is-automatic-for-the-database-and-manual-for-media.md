@@ -77,3 +77,27 @@ system — for a feature the platform already provides.
   the format.
 - Media is merged rather than replaced on restore: filenames are UUIDs, so a collision means the same
   file, and keeping files the archive does not mention costs disk where deleting them costs photos.
+
+## Amendment, 2026-11-11: platform Auto Backup, nothing manual
+
+Plain Light has no database and no media, the two things this decision was about. The export and
+restore screen, `data/backup/`, the custom `AppBackupAgent` and `scripts/upgrade-diff.py` were deleted
+before the first upload ([`optional-modules.md`](../optional-modules.md)), and the manifest now
+declares `allowBackup` with no agent and no extraction rules: Android's own Auto Backup copies every
+file the app keeps, well under the quota.
+
+**Every DataStore key now reaches the user's next phone**, because exclusions are per file and the
+preferences are one file. Each key was asked what it means there:
+
+- `theme_mode`, `material_you`: settings, welcome on the next phone.
+- `onboarding_done`: a first run that was finished; carrying it is right.
+- `tip_asked`: the user's answer to the one tip ask. Carried over, it stays answered, where the
+  agent used to leave it behind and ask again after a month (ADR-0007, amended the same day).
+- The app language: AppCompat's own file below Android 13, the platform's on 13+; both a setting.
+
+None is live state. The rule for the first one that is ("a light is on", "a schedule is armed"):
+judge it at the read, against something the platform never backs up, such as
+`PackageInfo.firstInstallTime`.
+
+The manual export comes back only with data a user would grieve, and with it the quota reasoning
+above.
