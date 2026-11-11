@@ -114,6 +114,6 @@ Emulator only (owner, 2026-11-11). Each row: `pixel-api36`, which can advertise.
 | # | Reading | Command | Result |
 | --- | --- | --- | --- |
 | R1 | A 0.2.0 light gets the three presets after upgrading | install 0.2.0 build, add a light, install this build over it | **pass**: the light, its remembered 30 % and the three presets all there (pixel-api36, 2026-11-11) |
-| R2 | Simple mode hides everything but On, Off, Brightness | Settings, then a light | **pass**, on by default; *Restore defaults* turns it back on (pixel-api36, urgent-api26) |
+| R2 | Simple mode hides everything but On, Off, Brightness | Settings, then a light | **pass**, on by default; *Restore defaults* turns it back on (pixel-api36, urgent-api26); read when it was on by default, which is now off |
 | R3 | Scene apply, save, delete; rename; timer; All off | Full controls | **pass** (pixel-api36); sent, not heard: no lamp |
 | R4 | Polish copy fits on a small screen | pixel-api36 at `wm size 720x1280`, density 320 (small-api30 cannot add a light) | **pass** after one fix: the timer buttons wrap to two lines and were left-aligned; now centred |
