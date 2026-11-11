@@ -11,6 +11,20 @@
     -->
     <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
 
+    <!-- The lamps only listen: the app advertises, never scans or connects (docs/phase-0.md). -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADVERTISE"
+        tools:targetApi="31" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
+
     <!--
         Package visibility (API 30+) for hand-offs to a mail app, Play and a browser. None of the
         launches needs them — package visibility has never blocked `startActivity`, and each launch

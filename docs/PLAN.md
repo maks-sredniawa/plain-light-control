@@ -18,7 +18,7 @@ was extracted from and the first app built from it settled on exactly this split
 
 - [ ] **Phase 0** — The lamp is known, and the template is cut down to the app ([`phase-0.md`](phase-0.md)) ← **open**
 - [ ] **Phase P** — The pipeline: repository setup, upload key, Play entry, secrets, a green internal upload
-- [ ] **Phase 1** — One light switched on and off and dimmed from the phone, in a simple screen
+- [ ] **Phase 1** — One light switched on and off and dimmed from the phone, in a simple screen ([`phase-1.md`](phase-1.md)) ← **code in, readings pending**
 - [ ] **Phase 2** — Every light in one place, its settings kept per light ← **the door: closed testing opens here**
 - [ ] **Phase 3** — The dashboard
 - [ ] **Phase N** — Ship shape: listing, screenshots, the App content answers

@@ -88,6 +88,10 @@ EXPECTED = {
     # the Play Store app's billing service; no dialog, and no data of the user's. Its
     # datatransport dependency also merges INTERNET, which the manifest removes.
     "com.android.vending.BILLING": "the Play Billing Library — the tip, ADR-0007",
+    # The lamps only listen, so the app advertises: no scan, no connection, no location.
+    "android.permission.BLUETOOTH_ADVERTISE": "sending to the lamps, API 31+ (the Nearby devices ask)",
+    "android.permission.BLUETOOTH": "sending to the lamps, API 30 and below (maxSdkVersion 30)",
+    "android.permission.BLUETOOTH_ADMIN": "starting an advertisement, API 30 and below (maxSdkVersion 30)",
     # AndroidX defines and uses this itself, signature-level. The prefix is the
     # applicationId, which differs between the debug and release builds, so it is
     # matched by suffix rather than spelled out.
@@ -123,7 +127,9 @@ FORBIDDEN = {
 # the feature is worth the devices it costs, write that into play-app-content.md,
 # and set it to False here (`android:required="false"`) unless it genuinely is
 # required.
-EXPECTED_FEATURES: dict[str, bool] = {}
+EXPECTED_FEATURES: dict[str, bool] = {
+    "android.hardware.bluetooth_le": True,
+}
 
 # Every android:screenOrientation the release artifact is allowed to carry, and the
 # value it is allowed to carry it at, keyed by fully-qualified class name. Empty:

@@ -22,6 +22,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import app.plainlight.ui.addlight.AddLightScreen
+import app.plainlight.ui.light.LightScreen
 import app.plainlight.ui.lights.LightsScreen
 import app.plainlight.ui.settings.SettingsScreen
 import app.plainlight.ui.support.LicenceTextScreen
@@ -110,7 +112,17 @@ fun MainNavigation(modifier: Modifier = Modifier) {
             entryProvider =
                 entryProvider {
                     entry<Lights> {
-                        LightsScreen(onOpenSupport = { backStack.add(Support) })
+                        LightsScreen(
+                            onOpenSupport = { backStack.add(Support) },
+                            onOpenLight = { id -> backStack.add(LightDetail(id)) },
+                            onAddLight = { backStack.add(AddLight) },
+                        )
+                    }
+                    entry<LightDetail> { key ->
+                        LightScreen(lightId = key.lightId, onBack = { backStack.removeLastOrNull() })
+                    }
+                    entry<AddLight> {
+                        AddLightScreen(onDone = { backStack.removeLastOrNull() })
                     }
                     entry<Settings> {
                         SettingsScreen(

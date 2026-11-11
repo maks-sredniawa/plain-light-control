@@ -1,0 +1,109 @@
+package app.plainlight.ble
+
+import android.Manifest
+import android.annotation.SuppressLint
+import android.bluetooth.BluetoothManager
+import android.bluetooth.le.AdvertiseCallback
+import android.bluetooth.le.AdvertiseData
+import android.bluetooth.le.AdvertiseSettings
+import android.content.Context
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.ParcelUuid
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import java.util.UUID
+import kotlin.coroutines.resume
+
+private const val ADVERTISE_MILLIS = 1_000L
+
+class BleLightTransmitter(
+    context: Context,
+    private val encode: (LightAddress, LightCommand, Int) -> ByteArray,
+) : LightTransmitter {
+    private val appContext = context.applicationContext
+    private val mutex = Mutex()
+    private var sequence = 0
+
+    override suspend fun send(
+        address: LightAddress,
+        command: LightCommand,
+    ): SendResult =
+        mutex.withLock {
+            if (!canAdvertise(appContext)) return SendResult.PermissionMissing
+            val adapter =
+                appContext.getSystemService(BluetoothManager::class.java)?.adapter
+                    ?: return SendResult.AdvertisingUnsupported
+            if (!adapter.isEnabled) return SendResult.BluetoothOff
+            val advertiser = adapter.bluetoothLeAdvertiser ?: return SendResult.AdvertisingUnsupported
+            val data = advertiseData(encode(address, command, sequence)) ?: return SendResult.AdvertisingUnsupported
+            sequence = (sequence + 1) and 0xFF
+            advertiseOnce(advertiser, data)
+        }
+
+    @SuppressLint("MissingPermission")
+    private suspend fun advertiseOnce(
+        advertiser: android.bluetooth.le.BluetoothLeAdvertiser,
+        data: AdvertiseData,
+    ): SendResult {
+        val settings =
+            AdvertiseSettings
+                .Builder()
+                .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
+                .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
+                .setConnectable(false)
+                .build()
+        var callback: AdvertiseCallback? = null
+        val started =
+            suspendCancellableCoroutine { continuation ->
+                callback =
+                    object : AdvertiseCallback() {
+                        override fun onStartSuccess(settingsInEffect: AdvertiseSettings) {
+                            if (continuation.isActive) continuation.resume(SendResult.Sent)
+                        }
+
+                        override fun onStartFailure(errorCode: Int) {
+                            if (continuation.isActive) continuation.resume(SendResult.Failed(errorCode))
+                        }
+                    }
+                advertiser.startAdvertising(settings, data, callback)
+                continuation.invokeOnCancellation { advertiser.stopAdvertising(callback) }
+            }
+        if (started == SendResult.Sent) {
+            try {
+                delay(ADVERTISE_MILLIS)
+            } finally {
+                advertiser.stopAdvertising(callback)
+            }
+        }
+        return started
+    }
+}
+
+fun canAdvertise(context: Context): Boolean =
+    Build.VERSION.SDK_INT < Build.VERSION_CODES.S ||
+        context.checkSelfPermission(Manifest.permission.BLUETOOTH_ADVERTISE) == PackageManager.PERMISSION_GRANTED
+
+private const val BASE_UUID_LOW = -0x7fffff7fa064cb05L
+
+private fun advertiseData(raw: ByteArray): AdvertiseData? {
+    val builder = AdvertiseData.Builder().setIncludeDeviceName(false).setIncludeTxPowerLevel(false)
+    for (structure in parseAdStructures(raw) ?: return null) {
+        when (structure.type) {
+            AD_FLAGS -> Unit
+            AD_SERVICE_UUIDS_16 ->
+                serviceUuids16(structure.data)?.forEach { short ->
+                    builder.addServiceUuid(ParcelUuid(UUID((short.toLong() shl 32) or 0x1000L, BASE_UUID_LOW)))
+                } ?: return null
+            AD_MANUFACTURER_DATA -> {
+                if (structure.data.size < 2) return null
+                val company = (structure.data[0].toInt() and 0xFF) or ((structure.data[1].toInt() and 0xFF) shl 8)
+                builder.addManufacturerData(company, structure.data.copyOfRange(2, structure.data.size))
+            }
+            else -> return null
+        }
+    }
+    return builder.build()
+}

@@ -45,6 +45,7 @@ class AppPreferences(
         val MATERIAL_YOU = booleanPreferencesKey("material_you")
         val ONBOARDING_DONE = booleanPreferencesKey("onboarding_done")
         val TIP_ASKED = booleanPreferencesKey("tip_asked")
+        val LIGHTS = stringPreferencesKey("lights")
 
         /** What *Restore to default* removes: everything the user chose, so each reads its default again. */
         val SETTINGS: List<Preferences.Key<*>> =
@@ -61,6 +62,7 @@ class AppPreferences(
             listOf(
                 ONBOARDING_DONE,
                 TIP_ASKED,
+                LIGHTS,
             )
     }
 
@@ -93,6 +95,38 @@ class AppPreferences(
      * carries it to the next phone (ADR-0005), so an answer given once is not asked for again there.
      */
     val tipAsked: Flow<Boolean> = store.data.map { it[Keys.TIP_ASKED] ?: false }
+
+    /** The user's lights, as a list rather than a table (`docs/optional-modules.md`, *How to decide*). */
+    val lights: Flow<List<Light>> = store.data.map { decodeLights(it[Keys.LIGHTS]) }
+
+    /** Adds [light], or replaces the one with the same id. */
+    suspend fun saveLight(light: Light) {
+        store.edit { prefs ->
+            val current = decodeLights(prefs[Keys.LIGHTS])
+            val updated =
+                if (current.any { it.id == light.id }) {
+                    current.map {
+                        if (it.id ==
+                            light.id
+                        ) {
+                            light
+                        } else {
+                            it
+                        }
+                    }
+                } else {
+                    current + light
+                }
+            prefs[Keys.LIGHTS] = encodeLights(updated)
+        }
+    }
+
+    suspend fun removeLight(id: String) {
+        store.edit { prefs ->
+            prefs[Keys.LIGHTS] =
+                encodeLights(decodeLights(prefs[Keys.LIGHTS]).filterNot { it.id == id })
+        }
+    }
 
     /**
      * The theme mode, read once, before any Activity exists.
