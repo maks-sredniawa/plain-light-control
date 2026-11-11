@@ -2,6 +2,8 @@ package app.plainlight.data
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import app.plainlight.ble.LightProtocol
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -20,9 +22,10 @@ class AppPreferencesTest {
     @get:Rule val folder = TemporaryFolder()
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private val preferences by lazy {
-        AppPreferences(PreferenceDataStoreFactory.create(scope = scope) { folder.newFile("app.preferences_pb") })
+    private val store by lazy {
+        PreferenceDataStoreFactory.create(scope = scope) { folder.newFile("app.preferences_pb") }
     }
+    private val preferences by lazy { AppPreferences(store) }
 
     @After fun tearDown() = scope.cancel()
 
@@ -44,6 +47,17 @@ class AppPreferencesTest {
         }
         assertEquals(declared.toSet(), (AppPreferences.Keys.SETTINGS + AppPreferences.Keys.KEPT).toSet())
     }
+
+    @Test
+    fun `saving a light keeps a stored light this version cannot read`() =
+        runBlocking {
+            val unreadable = """{"id":"x","name":"Old","protocol":"ZHIMEI_V9","controllerId":1}"""
+            store.edit { it[AppPreferences.Keys.LIGHTS] = "[$unreadable]" }
+            val lamp = Light("a", "Salon", LightProtocol.ZHIMEI_V2, 0x1234L)
+            preferences.saveLight(lamp)
+            assertEquals(listOf(lamp), preferences.lights.first())
+            assertTrue(store.data.first()[AppPreferences.Keys.LIGHTS]!!.startsWith("[$unreadable,"))
+        }
 
     @Test
     fun `simple mode is on until it is switched off`() =

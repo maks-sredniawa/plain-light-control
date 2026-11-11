@@ -109,24 +109,7 @@ class AppPreferences(
 
     /** Adds [light], or replaces the one with the same id. */
     suspend fun saveLight(light: Light) {
-        store.edit { prefs ->
-            val current = decodeLights(prefs[Keys.LIGHTS])
-            val updated =
-                if (current.any { it.id == light.id }) {
-                    current.map {
-                        if (it.id ==
-                            light.id
-                        ) {
-                            light
-                        } else {
-                            it
-                        }
-                    }
-                } else {
-                    current + light
-                }
-            prefs[Keys.LIGHTS] = encodeLights(updated)
-        }
+        store.edit { prefs -> prefs[Keys.LIGHTS] = putLight(prefs[Keys.LIGHTS], light) }
     }
 
     /** Changes the stored light inside one edit, so two changes made at once cannot overwrite each other. */
@@ -134,17 +117,11 @@ class AppPreferences(
         id: String,
         change: (Light) -> Light,
     ) {
-        store.edit { prefs ->
-            prefs[Keys.LIGHTS] =
-                encodeLights(decodeLights(prefs[Keys.LIGHTS]).map { if (it.id == id) change(it) else it })
-        }
+        store.edit { prefs -> prefs[Keys.LIGHTS] = changeLight(prefs[Keys.LIGHTS], id, change) }
     }
 
     suspend fun removeLight(id: String) {
-        store.edit { prefs ->
-            prefs[Keys.LIGHTS] =
-                encodeLights(decodeLights(prefs[Keys.LIGHTS]).filterNot { it.id == id })
-        }
+        store.edit { prefs -> prefs[Keys.LIGHTS] = dropLight(prefs[Keys.LIGHTS], id) }
     }
 
     /**
