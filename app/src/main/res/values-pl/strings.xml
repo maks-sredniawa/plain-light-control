@@ -25,6 +25,19 @@
     <string name="light_cool">Zimna</string>
     <string name="light_remember">Zapamiętaj to ustawienie</string>
     <string name="light_remember_hint">Przycisk Włącz zawsze przywraca zapamiętaną tu jasność i barwę.</string>
+    <string name="light_timer">Wyłącz później</string>
+    <plurals name="light_timer_off_in">
+        <item quantity="one">Wyłącz za %d godzinę</item>
+        <item quantity="few">Wyłącz za %d godziny</item>
+        <item quantity="many">Wyłącz za %d godzin</item>
+        <item quantity="other">Wyłącz za %d godziny</item>
+    </plurals>
+    <plurals name="light_timer_asked">
+        <item quantity="one">Poproszono światło o wyłączenie za %d godzinę. Światło nie może tego potwierdzić.</item>
+        <item quantity="few">Poproszono światło o wyłączenie za %d godziny. Światło nie może tego potwierdzić.</item>
+        <item quantity="many">Poproszono światło o wyłączenie za %d godzin. Światło nie może tego potwierdzić.</item>
+        <item quantity="other">Poproszono światło o wyłączenie za %d godziny. Światło nie może tego potwierdzić.</item>
+    </plurals>
     <string name="light_rename">Zmień nazwę światła</string>
     <string name="light_remove">Usuń to światło</string>
     <string name="light_remove_confirm_title">Usunąć %1$s?</string>
