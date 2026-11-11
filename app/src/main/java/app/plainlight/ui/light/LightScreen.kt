@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -193,7 +194,7 @@ private fun TimerSection(
         Row(horizontalArrangement = Arrangement.spacedBy(Spacing.base)) {
             for (hours in 1..2) {
                 OutlinedButton(onClick = { onSwitchOffIn(hours) }, modifier = Modifier.weight(1f)) {
-                    Text(pluralStringResource(R.plurals.light_timer_off_in, hours, hours))
+                    Text(pluralStringResource(R.plurals.light_timer_off_in, hours, hours), textAlign = TextAlign.Center)
                 }
             }
         }
