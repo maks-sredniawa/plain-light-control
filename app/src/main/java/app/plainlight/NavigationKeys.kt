@@ -23,6 +23,13 @@ import kotlinx.serialization.Serializable
  */
 @Serializable data object Lights : NavKey
 
+@Serializable
+data class LightDetail(
+    val lightId: String,
+) : NavKey
+
+@Serializable data object AddLight : NavKey
+
 @Serializable data object Settings : NavKey
 
 /**

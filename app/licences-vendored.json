@@ -1,0 +1,15 @@
+[
+  {
+    "groupId": "github.com/NicoIIT",
+    "artifactId": "ha-ble-adv",
+    "version": "7b40e85",
+    "name": "ha-ble-adv — the Zhi Mei light codec, ported to Kotlin",
+    "spdxLicenses": [
+      {
+        "identifier": "MIT",
+        "name": "MIT License",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    ]
+  }
+]

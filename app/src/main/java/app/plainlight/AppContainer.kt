@@ -6,6 +6,9 @@ import android.os.Build
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import app.plainlight.ble.BleLightTransmitter
+import app.plainlight.ble.LightCodec
+import app.plainlight.ble.LightTransmitter
 import app.plainlight.data.AppPreferences
 import app.plainlight.tip.TipJar
 import kotlinx.coroutines.CoroutineScope
@@ -48,6 +51,9 @@ class AppContainer(
      * screen that opened Play's sheet is gone, and it still has to be consumed — see [TipJar].
      */
     val tipJar = TipJar(appContext, applicationScope)
+
+    /** One instance, so its sequence counter and its lock span every screen. */
+    val transmitter: LightTransmitter = BleLightTransmitter(appContext, LightCodec::encode)
 
     /** When this package was first installed on this phone — the tip ask's clock, not a restore's. */
     val installedAt: Instant by lazy {

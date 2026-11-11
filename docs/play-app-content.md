@@ -35,6 +35,8 @@ Read at **versionCode _, versionName _** by `publish-play.yml`'s verify step on 
 | Permission | Whose | What it is for | Console consequence |
 | --- | --- | --- | --- |
 | `ACCESS_NETWORK_STATE` | Play Billing's `datatransport`, alone | read before its (blocked) log upload; opens nothing | none, but a reviewer may ask why an app with no network reads it — this row is the answer |
+| `BLUETOOTH_ADVERTISE` | the app | sending to the lamps on API 31+ (the *Nearby devices* ask); advertise only, `neverForLocation` does not apply because the app never scans | none: not on Play's declaration list |
+| `BLUETOOTH`, `BLUETOOTH_ADMIN` | the app, `maxSdkVersion 30` | the same, below API 31, granted at install | none |
 | `com.android.vending.BILLING` | Play Billing Library | the tip (ADR-0007): IPC to the Play app's billing service | none: not on Play's declaration list. The listing shows *Contains in-app purchases* once products exist |
 | `…DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION` | AndroidX | its own non-exported receivers, signature-level | none: not user-visible |
 
@@ -140,8 +142,14 @@ The answer rests on one fact per route data could take:
    to consume, never stores and never sends anywhere else, so by the definition above it is not
    collected. The developer's order report comes from Google, not from the app.
 
+5. **Bluetooth is still "no data collected".** The app broadcasts commands to the user's lamps and
+   receives nothing: no scan, no connection, so no device or nearby-device data is read at all. The
+   lamp's pairing ID is a random number the app made up and keeps on the phone.
+
 Would change any of it:
 
+- **Scanning for Bluetooth devices**, which reads nearby devices and on API 30 and below needs
+  location.
 - **`INTERNET` on the artifact**, from our code or a dependency. Every answer here becomes a question.
 - **Anything the app sends by itself**, such as crash reporting or analytics. There is none today.
 - **The app keeping a purchase**, such as a tip history or a supporter badge: that is *Purchase

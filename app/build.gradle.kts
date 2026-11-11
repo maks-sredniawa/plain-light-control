@@ -229,6 +229,10 @@ abstract class BundleLicences : DefaultTask() {
     @get:InputFile
     abstract val artifacts: RegularFileProperty
 
+    /** Code ported into this repo rather than depended on, which Licensee cannot see. */
+    @get:InputFile
+    abstract val vendored: RegularFileProperty
+
     @get:OutputDirectory
     abstract val outputDirectory: DirectoryProperty
 
@@ -236,7 +240,23 @@ abstract class BundleLicences : DefaultTask() {
     fun bundle() {
         val destination = outputDirectory.get().asFile.resolve(ASSET_NAME)
         destination.parentFile.mkdirs()
-        artifacts.get().asFile.copyTo(destination, overwrite = true)
+        val report =
+            artifacts
+                .get()
+                .asFile
+                .readText()
+                .trim()
+                .removeSuffix("]")
+                .trimEnd()
+        val extra =
+            vendored
+                .get()
+                .asFile
+                .readText()
+                .trim()
+                .removePrefix("[")
+                .trimStart()
+        destination.writeText(if (report == "[") "[$extra" else "$report,\n$extra")
     }
 
     companion object {
@@ -254,6 +274,7 @@ androidComponents {
         val bundleTask =
             tasks.register<BundleLicences>("bundle${suffix}Licences") {
                 artifacts.set(layout.buildDirectory.file("reports/licensee/android$suffix/artifacts.json"))
+                vendored.set(layout.projectDirectory.file("licences-vendored.json"))
                 // The report path is Licensee's convention rather than something it exposes, so the
                 // dependency is declared by name. Wrong here and the build fails on a missing input
                 // file — loudly, not silently with a stale list.

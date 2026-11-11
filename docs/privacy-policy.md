@@ -33,6 +33,10 @@ The Google Play Billing library, which handles tips, carries usage logging of it
 
 ## What the app can access, and why
 
+- **Nearby devices (Bluetooth).** Lets the app send commands to your lights. Your lights only
+  listen, so the app broadcasts short Bluetooth signals and never scans for, connects to or reads
+  from any device. It does not use your location. On Android 11 and older this is granted with the
+  app rather than asked for.
 - **Google Play billing.** Lets the app ask the Google Play app for the price of a tip and open its
   payment sheet. It gives the app nothing about you.
 

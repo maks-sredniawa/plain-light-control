@@ -29,6 +29,42 @@
 
     <!-- Lights -->
     <string name="lights_empty">No lights have been added yet.</string>
+    <string name="lights_add">Add a light</string>
+    <string name="lights_on">On</string>
+    <string name="lights_off">Off</string>
+    <string name="light_brightness">Brightness</string>
+    <string name="light_colour">Colour</string>
+    <string name="light_warm">Warm</string>
+    <string name="light_cool">Cool</string>
+    <string name="light_remember">Remember this setting</string>
+    <string name="light_remember_hint">On always brings back the brightness and colour remembered here.</string>
+    <string name="light_remove">Remove this light</string>
+    <string name="light_remove_confirm_title">Remove %1$s?</string>
+    <string name="light_remove_confirm_body">The app forgets this light. The light itself, its remote and its own app keep working.</string>
+    <string name="light_remove_confirm">Remove</string>
+    <string name="add_light_name">Name</string>
+    <string name="add_light_name_default">Lamp</string>
+    <string name="add_light_step_power">1. Switch the light off at the wall switch, wait 5 seconds, then switch it on again.</string>
+    <string name="add_light_step_pair">2. Within 5 seconds, tap Pair.</string>
+    <string name="add_light_pair">Pair</string>
+    <string name="add_light_pairing">Pairing…</string>
+    <string name="add_light_check">Did the light switch off and back on?</string>
+    <string name="add_light_yes">Yes</string>
+    <string name="add_light_no">No</string>
+    <string name="add_light_retry">Let’s try another way. Switch the light off and on at the wall again, then tap Pair.</string>
+    <string name="add_light_failed">The light did not answer. Make sure it is within a few metres of the phone and that its own app can control it, then try again.</string>
+    <string name="add_light_try_again">Start again</string>
+    <string name="problem_permission_title">Plain Light can’t reach your lights</string>
+    <string name="problem_permission_body">It needs the Nearby devices permission to send to your lights over Bluetooth. It uses it for nothing else.</string>
+    <string name="problem_permission_action">Open settings</string>
+    <string name="problem_bluetooth_title">Bluetooth is off</string>
+    <string name="problem_bluetooth_body">Your lights listen over Bluetooth. Turn it on to control them.</string>
+    <string name="problem_bluetooth_action">Bluetooth settings</string>
+    <string name="problem_unsupported_title">This phone can’t control the lights</string>
+    <string name="problem_unsupported_body">Its Bluetooth cannot send the signal these lights listen for.</string>
+    <string name="problem_failed_title">The light did not get that</string>
+    <string name="problem_failed_body">Try again in a moment.</string>
+    <string name="action_close">Close</string>
     <!-- The tip's one ask (ADR-0007): once, after a light is added and a month has passed -->
     <string name="lights_tip_ask_title">This app is free, and stays free</string>
     <string name="lights_tip_ask_body">If it is useful to you, you can leave the developer a tip. It unlocks nothing, and the app will not ask again on this phone.</string>
