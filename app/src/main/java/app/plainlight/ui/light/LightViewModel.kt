@@ -35,7 +35,6 @@ data class LightUiState(
     val removed: Boolean = false,
     /** What the light was last asked to switch off in. The lamp keeps the time and cannot say whether it is counting. */
     val timerHours: Int? = null,
-    /** On until the store says otherwise, so the first frame never flashes Full controls at someone who should not see them. */
     val simpleMode: Boolean = true,
 )
 

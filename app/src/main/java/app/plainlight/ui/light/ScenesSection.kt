@@ -101,7 +101,6 @@ private fun sceneLabel(scene: Scene): String =
         null -> ""
     }
 
-/** Blank is refused: the confirm button stays disabled until there is a name. */
 @Composable
 internal fun NameDialog(
     title: String,
