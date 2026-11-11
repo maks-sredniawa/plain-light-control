@@ -317,7 +317,7 @@ dependencies {
     // Consumes a cleared tip whenever the app comes to the foreground — see MainApplication.
     implementation(libs.androidx.lifecycle.process)
 
-    // The Licences screen reads Licensee's JSON report.
+    // The lights list, and the Licences screen's read of Licensee's JSON report.
     implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit)

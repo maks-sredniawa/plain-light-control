@@ -51,6 +51,7 @@
     <string name="add_light_check">Did the light switch off and back on?</string>
     <string name="add_light_yes">Yes</string>
     <string name="add_light_no">No</string>
+    <string name="add_light_after_permission">Done. The light only listens for a few seconds after it is switched on, so switch it off and on at the wall again, then tap Pair.</string>
     <string name="add_light_retry">Let’s try another way. Switch the light off and on at the wall again, then tap Pair.</string>
     <string name="add_light_failed">The light did not answer. Make sure it is within a few metres of the phone and that its own app can control it, then try again.</string>
     <string name="add_light_try_again">Start again</string>

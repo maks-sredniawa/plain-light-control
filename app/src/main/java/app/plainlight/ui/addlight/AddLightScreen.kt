@@ -49,7 +49,7 @@ fun AddLightScreen(
 
     val askPermission =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) viewModel.pair() else viewModel.permissionDenied()
+            if (granted) viewModel.permissionGranted() else viewModel.permissionDenied()
         }
     val pair = {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !canAdvertise(context)) {
@@ -79,7 +79,11 @@ fun AddLightScreen(
                 )
                 when (state.step) {
                     AddLightStep.INSTRUCTIONS -> {
-                        if (state.attempt > 0) Body(stringResource(R.string.add_light_retry))
+                        if (state.permissionJustGranted) {
+                            Body(stringResource(R.string.add_light_after_permission))
+                        } else if (state.attempt > 0) {
+                            Body(stringResource(R.string.add_light_retry))
+                        }
                         Body(stringResource(R.string.add_light_step_power))
                         Body(stringResource(R.string.add_light_step_pair))
                         Button(
@@ -111,7 +115,7 @@ fun AddLightScreen(
                             Text(stringResource(R.string.add_light_try_again))
                         }
                     }
-                    AddLightStep.DONE -> Unit
+                    AddLightStep.SAVING, AddLightStep.DONE -> Unit
                 }
             }
         }

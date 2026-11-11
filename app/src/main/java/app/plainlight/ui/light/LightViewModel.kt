@@ -9,8 +9,10 @@ import app.plainlight.ble.LightCommand
 import app.plainlight.ble.LightTransmitter
 import app.plainlight.ble.SendResult
 import app.plainlight.data.AppPreferences
+import app.plainlight.data.LastSent
 import app.plainlight.data.Light
 import app.plainlight.data.LightSetting
+import app.plainlight.ui.lights.ifSent
 import app.plainlight.ui.lights.sendAll
 import app.plainlight.ui.lights.switchOn
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +26,7 @@ import kotlinx.coroutines.launch
 
 data class LightUiState(
     val light: Light? = null,
-    /** What the sliders show: the last values this app sent, never a reading from the lamp. */
+    /** What the sliders show: a drag in progress, else what this app last sent, else the favourite — never a reading from the lamp. */
     val setting: LightSetting = LightSetting(),
     val problem: SendResult? = null,
     val removed: Boolean = false,
@@ -34,8 +36,9 @@ class LightViewModel(
     private val lightId: String,
     private val preferences: AppPreferences,
     private val transmitter: LightTransmitter,
+    private val lastSent: LastSent,
 ) : ViewModel() {
-    private val setting = MutableStateFlow<LightSetting?>(null)
+    private val preview = MutableStateFlow<LightSetting?>(null)
     private val problem = MutableStateFlow<SendResult?>(null)
     private val removed = MutableStateFlow(false)
 
@@ -44,38 +47,47 @@ class LightViewModel(
             preferences.lights.map { all ->
                 all.firstOrNull { it.id == lightId }
             },
-            setting,
+            lastSent.of(lightId),
+            preview,
             problem,
             removed,
-        ) { light, setting, problem, removed ->
-            LightUiState(light, setting ?: light?.favourite ?: LightSetting(), problem, removed)
+        ) { light, sent, preview, problem, removed ->
+            LightUiState(light, preview ?: sent ?: light?.favourite ?: LightSetting(), problem, removed)
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LightUiState())
 
     fun switchOn() =
         withLight { light ->
-            setting.value = light.favourite
-            transmitter.switchOn(light)
+            preview.value = null
+            transmitter.switchOn(light, lastSent)
         }
 
     fun switchOff() = withLight { transmitter.send(it.address, LightCommand.Off) }
 
     fun previewBrightness(level: Float) {
-        setting.value = current().copy(brightness = level)
+        preview.value = current().copy(brightness = level)
     }
 
     fun previewColdness(coldness: Float) {
-        setting.value = current().copy(coldness = coldness)
+        preview.value = current().copy(coldness = coldness)
     }
 
-    fun sendBrightness() = withLight { transmitter.send(it.address, LightCommand.Brightness(current().brightness)) }
+    fun sendBrightness() =
+        withLight { light ->
+            val level = current().brightness
+            transmitter
+                .send(light.address, LightCommand.Brightness(level))
+                .ifSent { lastSent.update(light) { it.copy(brightness = level) } }
+        }
 
     fun sendColdness() =
-        withLight {
-            transmitter.sendAll(
-                it,
-                LightCommand.ColourTemperature(current().coldness),
-                LightCommand.Brightness(current().brightness),
-            )
+        withLight { light ->
+            val setting = current()
+            transmitter
+                .sendAll(
+                    light,
+                    LightCommand.ColourTemperature(setting.coldness),
+                    LightCommand.Brightness(setting.brightness),
+                ).ifSent { lastSent.update(light) { setting } }
         }
 
     fun remember() {
@@ -116,7 +128,12 @@ class LightViewModel(
             extras: CreationExtras,
         ): T {
             val app = extras[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as MainApplication
-            return LightViewModel(lightId, app.container.preferences, app.container.transmitter) as T
+            return LightViewModel(
+                lightId,
+                app.container.preferences,
+                app.container.transmitter,
+                app.container.lastSent,
+            ) as T
         }
     }
 }

@@ -93,6 +93,9 @@ preferences are one file. Each key was asked what it means there:
 - `onboarding_done`: a first run that was finished; carrying it is right.
 - `tip_asked`: the user's answer to the one tip ask. Carried over, it stays answered, where the
   agent used to leave it behind and ask again after a month (ADR-0007, amended the same day).
+- `lights`: each light with its controller ID, which the lamp learned while pairing. Carried over,
+  the new phone controls the same lights without pairing them again, since the ID is a random number
+  carried in the advert and not tied to the old phone.
 - The app language: AppCompat's own file below Android 13, the platform's on 13+; both a setting.
 
 None is live state. The rule for the first one that is ("a light is on", "a schedule is armed"):

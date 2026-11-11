@@ -43,7 +43,9 @@ The controller ID is a random 16-bit number made once per *Add a light*, so ever
 the same one. Her remote and the Chinese app stay paired; the lamp holds several controllers.
 
 The *Nearby devices* ask (API 31+) is made on the **Pair** tap, the moment it is needed
-(`PLAN.md` rule 4). A denial shows the permission banner with *Open settings*.
+(`PLAN.md` rule 4). A denial shows the permission banner with *Open settings*. A grant does not pair
+there and then: the dialog has outlasted the lamp's 5-second window, so the wall-switch step is asked
+for again before *Pair*.
 
 ## 2. Simple mode
 
