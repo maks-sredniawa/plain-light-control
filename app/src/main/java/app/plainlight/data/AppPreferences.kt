@@ -98,7 +98,7 @@ class AppPreferences(
      */
     val tipAsked: Flow<Boolean> = store.data.map { it[Keys.TIP_ASKED] ?: false }
 
-    /** Whether a light's screen shows only On, Off and brightness. Defaults off, to Full controls. */
+    /** Whether a light's screen shows only On, Off and brightness. */
     val simpleMode: Flow<Boolean> = store.data.map { it[Keys.SIMPLE_MODE] ?: false }
 
     /** The user's lights, as a list rather than a table (`docs/optional-modules.md`, *How to decide*). */

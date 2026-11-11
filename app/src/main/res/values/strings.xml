@@ -99,7 +99,7 @@
 
     <!-- Settings -->
     <string name="settings_simple_mode">Simple mode</string>
-    <string name="settings_simple_mode_hint">A light’s screen shows only On, Off and brightness. Turn it off for colour, scenes, the timer, rename and remove.</string>
+    <string name="settings_simple_mode_hint">Turn it on so a light’s screen shows only On, Off and brightness. Left off, it also has colour, scenes, the timer, rename and remove.</string>
     <string name="settings_appearance">Appearance</string>
     <string name="settings_theme_system">System</string>
     <string name="settings_theme_light">Light</string>
