@@ -214,6 +214,17 @@ class LightViewModelTest {
             assertEquals(LightSetting(brightness = 0.3f, coldness = 0.5f), viewModel.state.value.setting)
         }
 
+    @Test
+    fun `a send carries the slider's value before the screen state has caught up with it`() =
+        runTest {
+            preferences.saveLight(light)
+            val unwatched = LightViewModel(light.id, preferences, transmitter, lastSent)
+            unwatched.previewColdness(0.9f)
+            unwatched.sendColdness()
+            sentCount.first { it == 2 }
+            assertEquals(LightCommand.ColourTemperature(0.9f), sent.first())
+        }
+
     private suspend fun TestScope.open(): LightViewModel {
         val viewModel = LightViewModel(light.id, preferences, transmitter, lastSent)
         backgroundScope.launch { viewModel.state.collect {} }

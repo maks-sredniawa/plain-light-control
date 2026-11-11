@@ -166,7 +166,8 @@ class LightViewModel(
         screen.update { it.copy(problem = null) }
     }
 
-    private fun current(): LightSetting = state.value.setting
+    /** Reads the preview where it is set: [state] only reflects it once its combine has run. */
+    private fun current(): LightSetting = screen.value.preview ?: state.value.setting
 
     private suspend fun light(): Light? = preferences.lights.first().firstOrNull { it.id == lightId }
 
