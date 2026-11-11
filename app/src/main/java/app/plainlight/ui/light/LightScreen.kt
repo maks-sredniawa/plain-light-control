@@ -18,6 +18,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -171,7 +172,13 @@ private fun LabelledSlider(
 ) {
     Column(modifier = Modifier.padding(horizontal = Spacing.base)) {
         Text(label, style = MaterialTheme.typography.titleMedium)
-        Slider(value = value, onValueChange = onChange, onValueChangeFinished = onDone, valueRange = range)
+        Slider(
+            value = value,
+            onValueChange = onChange,
+            onValueChangeFinished = onDone,
+            valueRange = range,
+            colors = SliderDefaults.colors(inactiveTrackColor = MaterialTheme.colorScheme.outline),
+        )
         if (start != null && end != null) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(start, style = MaterialTheme.typography.bodySmall)
