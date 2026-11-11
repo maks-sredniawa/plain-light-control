@@ -1,6 +1,7 @@
 package app.plainlight.ui.light
 
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.lifecycle.viewModelScope
 import app.plainlight.ble.LightCommand
 import app.plainlight.ble.LightProtocol
 import app.plainlight.ble.LightTransmitter
@@ -15,9 +16,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -54,7 +58,18 @@ class LightViewModelTest {
 
     @Before fun setUp() = Dispatchers.setMain(UnconfinedTestDispatcher())
 
+    private val created = mutableListOf<LightViewModel>()
+
+    private fun track(viewModel: LightViewModel): LightViewModel = viewModel.also { created += it }
+
+    /** A send or save still in flight would resume on Main after [Dispatchers.resetMain] and fail whichever test runs next. */
     @After fun tearDown() {
+        runBlocking {
+            created.forEach {
+                it.viewModelScope.coroutineContext.job
+                    .cancelAndJoin()
+            }
+        }
         Dispatchers.resetMain()
         scope.cancel()
     }
@@ -86,7 +101,7 @@ class LightViewModelTest {
             first.sendBrightness()
             lastSent.of(light.id).first { it?.brightness == 0.2f }
 
-            val restarted = LightViewModel(light.id, preferences, transmitter, LastSent(preferences))
+            val restarted = track(LightViewModel(light.id, preferences, transmitter, LastSent(preferences)))
             backgroundScope.launch { restarted.state.collect {} }
             restarted.state.first { it.light != null }
             sent.clear()
@@ -218,7 +233,7 @@ class LightViewModelTest {
     fun `a send carries the slider's value before the screen state has caught up with it`() =
         runTest {
             preferences.saveLight(light)
-            val unwatched = LightViewModel(light.id, preferences, transmitter, lastSent)
+            val unwatched = track(LightViewModel(light.id, preferences, transmitter, lastSent))
             unwatched.previewColdness(0.9f)
             unwatched.sendColdness()
             lastSent.of(light.id).first { it?.coldness == 0.9f }
@@ -231,14 +246,14 @@ class LightViewModelTest {
             preferences.saveLight(light)
             preferences.setSimpleMode(true)
             lastSent.update(light) { it.copy(brightness = 0.2f) }
-            val first = LightViewModel(light.id, preferences, transmitter, lastSent).state.value
+            val first = track(LightViewModel(light.id, preferences, transmitter, lastSent)).state.value
             assertEquals(light.name, first.light?.name)
             assertEquals(true, first.simpleMode)
             assertEquals(0.2f, first.setting.brightness)
         }
 
     private suspend fun TestScope.open(): LightViewModel {
-        val viewModel = LightViewModel(light.id, preferences, transmitter, lastSent)
+        val viewModel = track(LightViewModel(light.id, preferences, transmitter, lastSent))
         backgroundScope.launch { viewModel.state.collect {} }
         viewModel.state.first { it.light != null }
         return viewModel
