@@ -75,4 +75,35 @@ class LightsJsonTest {
         assertEquals(emptyList<Light>(), decodeLights(null))
         assertEquals(emptyList<Light>(), decodeLights("{not json"))
     }
+
+    private val fromNewerVersion =
+        """{"id":"a","name":"Salon","protocol":"ZHIMEI_V2","controllerId":4660,"room":"Kitchen",""" +
+            """"favourite":{"brightness":0.3,"coldness":0.1,"hue":3},""" +
+            """"scenes":[{"id":"film","name":"Film","setting":{"brightness":0.2,"coldness":0.4},"fade":2}]}"""
+
+    @Test
+    fun `a change keeps the fields a newer version stored, at every depth`() {
+        val changed = changeLight("[$fromNewerVersion]", "a") { it.copy(name = "Kitchen") }
+        assertEquals("Kitchen", decodeLights(changed).single().name)
+        listOf(""""room":"Kitchen"""", """"hue":3""", """"fade":2""").forEach {
+            assertTrue("$it lost from $changed", it in changed)
+        }
+    }
+
+    @Test
+    fun `a field reset to its default is not brought back from the stored entry`() {
+        val changed =
+            changeLight("[$fromNewerVersion]", "a") { it.copy(scenes = presetScenes, favourite = LightSetting()) }
+        val light = decodeLights(changed).single()
+        assertEquals(presetScenes, light.scenes)
+        assertEquals(LightSetting(), light.favourite)
+        assertTrue(""""room":"Kitchen"""" in changed)
+    }
+
+    @Test
+    fun `a save over a stored light keeps the fields a newer version stored`() {
+        val saved = putLight("[$fromNewerVersion]", decodeLights("[$fromNewerVersion]").single().copy(name = "Hall"))
+        assertTrue(""""room":"Kitchen"""" in saved)
+        assertEquals("Hall", decodeLights(saved).single().name)
+    }
 }
