@@ -56,8 +56,7 @@ class AppContainer(
     /** One instance, so its sequence counter and its lock span every screen. */
     val transmitter: LightTransmitter = BleLightTransmitter(appContext, LightCodec::encode)
 
-    /** Here so a light's screen, reopened, shows what was sent from its last visit. */
-    val lastSent = LastSent()
+    val lastSent = LastSent(preferences)
 
     /** When this package was first installed on this phone — the tip ask's clock, not a restore's. */
     val installedAt: Instant by lazy {

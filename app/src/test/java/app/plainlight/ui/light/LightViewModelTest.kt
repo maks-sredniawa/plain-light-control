@@ -15,6 +15,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
@@ -39,13 +40,15 @@ class LightViewModelTest {
         AppPreferences(PreferenceDataStoreFactory.create(scope = scope) { folder.newFile("app.preferences_pb") })
     }
     private val sent = CopyOnWriteArrayList<LightCommand>()
+    private val sentCount = MutableStateFlow(0)
     private var answer: SendResult = SendResult.Sent
     private val transmitter =
         LightTransmitter { _, command ->
             sent += command
+            sentCount.value = sent.size
             answer
         }
-    private val lastSent = LastSent()
+    private val lastSent by lazy { LastSent(preferences) }
     private val light =
         Light("lamp", "Lamp", LightProtocol.ZHIMEI_V2, 42, LightSetting(brightness = 1f, coldness = 0.5f))
 
@@ -72,6 +75,45 @@ class LightViewModelTest {
             second.sendColdness()
             lastSent.of(light.id).first { it?.coldness == 0.9f }
             assertEquals(listOf(LightCommand.ColourTemperature(0.9f), LightCommand.Brightness(0.1f)), sent.toList())
+        }
+
+    @Test
+    fun `On brings back what was last sent, even after a restart`() =
+        runTest {
+            preferences.saveLight(light)
+            val first = open()
+            first.previewBrightness(0.2f)
+            first.sendBrightness()
+            lastSent.of(light.id).first { it?.brightness == 0.2f }
+
+            val restarted = LightViewModel(light.id, preferences, transmitter, LastSent(preferences))
+            backgroundScope.launch { restarted.state.collect {} }
+            restarted.state.first { it.light != null }
+            sent.clear()
+            restarted.switchOn()
+            sentCount.first { it == 3 }
+            assertEquals(
+                listOf(LightCommand.On, LightCommand.ColourTemperature(0.5f), LightCommand.Brightness(0.2f)),
+                sent.toList(),
+            )
+        }
+
+    @Test
+    fun `once a favourite is remembered On brings it back rather than the last sent`() =
+        runTest {
+            preferences.saveLight(light)
+            val viewModel = open()
+            viewModel.previewBrightness(0.6f)
+            viewModel.remember()
+            viewModel.state.first { it.light?.favouriteRemembered == true }
+            viewModel.previewBrightness(0.1f)
+            viewModel.sendBrightness()
+            lastSent.of(light.id).first { it?.brightness == 0.1f }
+
+            sent.clear()
+            viewModel.switchOn()
+            viewModel.state.first { it.setting.brightness == 0.6f }
+            assertEquals(LightCommand.Brightness(0.6f), sent.last())
         }
 
     @Test

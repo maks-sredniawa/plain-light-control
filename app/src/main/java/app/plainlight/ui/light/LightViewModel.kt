@@ -121,7 +121,11 @@ class LightViewModel(
 
     fun remember() {
         val setting = current()
-        viewModelScope.launch { preferences.updateLight(lightId) { it.copy(favourite = setting) } }
+        viewModelScope.launch {
+            preferences.updateLight(
+                lightId,
+            ) { it.copy(favourite = setting, favouriteRemembered = true) }
+        }
     }
 
     fun rename(name: String) {

@@ -49,7 +49,9 @@ for again before *Pair*.
 
 ## 2. Simple mode
 
-- **On** sends On, then the remembered colour, then the remembered brightness. Brightness goes last
+- **On** sends On, then the colour, then the brightness: the favourite once *Remember this setting*
+  has been tapped, otherwise the last ones sent, stored with the light because the lamp itself resets
+  to full brightness when switched on at the wall (owner, 2026-11-11). Brightness goes last
   because some lamps reset it on a colour change (ha-ble-adv's `br_after_ct`).
 - **Off** sends Off.
 - **Brightness** and **Colour** sliders send their value when the finger lifts. A colour change is

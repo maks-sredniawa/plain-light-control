@@ -10,7 +10,7 @@ import app.plainlight.data.LightSetting
 suspend fun LightTransmitter.switchOn(
     light: Light,
     lastSent: LastSent,
-): SendResult = switchOn(light, light.favourite, lastSent)
+): SendResult = switchOn(light, light.onSetting, lastSent)
 
 /** Some lamps reset brightness on a colour change, so brightness always goes last. */
 suspend fun LightTransmitter.switchOn(
