@@ -141,14 +141,14 @@ Dodaj swoją lampę sufitową i steruj nią z telefonu: włączanie, wyłączani
 
 ### 0.3.0 — scenes, a timer and Simple mode
 
-**English** — 332/500:
+**English** — 322/500:
 
 ```
 Every light now has scenes: Evening, Reading and Night light come ready-made, and you can save your own. Rename a light, ask it to switch itself off in one or two hours, and switch all your lights off at once. Simple mode keeps a light's screen to On, Off and brightness; turn it on in Settings for whoever needs it plain.
 ```
 
-**Polish** — 344/500:
+**Polish** — 346/500:
 
 ```
-Każde światło ma teraz sceny: Wieczór, Czytanie i Lampka nocna są gotowe, a własne możesz zapisać. Możesz zmienić nazwę światła, poprosić je o wyłączenie za godzinę lub dwie i wyłączyć wszystkie światła naraz. Tryb prosty, domyślnie włączony, zostawia na ekranie światła tylko Włącz, Wyłącz i jasność. Wyłącz go w Ustawieniach, aby mieć resztę.
+Każde światło ma teraz sceny: Wieczór, Czytanie i Lampka nocna są gotowe, a własne możesz zapisać. Możesz zmienić nazwę światła, poprosić je o wyłączenie za godzinę lub dwie i wyłączyć wszystkie światła naraz. Tryb prosty zostawia na ekranie światła tylko Włącz, Wyłącz i jasność. Włącz go w Ustawieniach dla osoby, której wystarczy prosty widok.
 ```
