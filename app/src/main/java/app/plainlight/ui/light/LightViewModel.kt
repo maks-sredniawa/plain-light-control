@@ -95,22 +95,29 @@ class LightViewModel(
 
     fun sendBrightness() =
         withLight { light ->
-            val level = current().brightness
+            val shown = current()
             transmitter
-                .send(light.address, LightCommand.Brightness(level))
-                .ifSent { lastSent.update(light) { it.copy(brightness = level) } }
+                .send(light.address, LightCommand.Brightness(shown.brightness))
+                .ifSent { lastSent.update(light) { it.copy(brightness = shown.brightness) } }
+                .also { endPreview(shown) }
         }
 
     fun sendColdness() =
         withLight { light ->
-            val setting = current()
+            val shown = current()
             transmitter
                 .sendAll(
                     light,
-                    LightCommand.ColourTemperature(setting.coldness),
-                    LightCommand.Brightness(setting.brightness),
-                ).ifSent { lastSent.update(light) { setting } }
+                    LightCommand.ColourTemperature(shown.coldness),
+                    LightCommand.Brightness(shown.brightness),
+                ).ifSent { lastSent.update(light) { shown } }
+                .also { endPreview(shown) }
         }
+
+    /** Hands the sliders back to what was last sent, unless a newer drag has already moved them. */
+    private fun endPreview(shown: LightSetting) {
+        screen.update { if (it.preview == shown) it.copy(preview = null) else it }
+    }
 
     fun remember() {
         val setting = current()
