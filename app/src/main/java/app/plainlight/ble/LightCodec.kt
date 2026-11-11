@@ -49,6 +49,7 @@ object LightCodec {
             LightCommand.Off -> Frame(0xB2)
             is LightCommand.Brightness -> level(0xB5, command.level)
             is LightCommand.ColourTemperature -> level(0xB7, command.coldness)
+            is LightCommand.Timer -> Frame(0xA5, arg0 = command.hours)
         }
 
     private fun level(

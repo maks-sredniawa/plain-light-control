@@ -318,6 +318,16 @@ class LightCodecTest {
     }
 
     @Test
+    fun `the timer for 2 hours is the captured A5 frame for both variants`() {
+        for (v in vectors.filter { it.frame.cmd == 0xA5 }) {
+            val frame = LightCodec.frame(v.protocol, LightCommand.Timer(2))
+            assertEquals(LightCodec.Frame(0xA5, 2, 0, 0), frame)
+            assertEquals(v.hex, LightCodec.encodeFrame(v.protocol, v.id, v.index, v.tx, v.seed, frame).hex())
+        }
+        assertEquals(2, vectors.count { it.frame.cmd == 0xA5 })
+    }
+
+    @Test
     fun `every encoded payload is one service-UUID structure Android can express`() {
         for (protocol in LightProtocol.entries) {
             for (sequence in 0..300) {

@@ -27,6 +27,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -113,6 +114,7 @@ fun LightScreen(
                 onSave = viewModel::saveScene,
                 onDelete = { viewModel.deleteScene(it.id) },
             )
+            TimerSection(timerHours = state.timerHours, onSwitchOffIn = viewModel::switchOffIn)
             TextButton(onClick = { confirmRemove = true }, modifier = Modifier.padding(horizontal = Spacing.base)) {
                 Text(stringResource(R.string.light_remove))
             }
@@ -170,6 +172,33 @@ private fun LabelledSlider(
                 Text(start, style = MaterialTheme.typography.bodySmall)
                 Text(end, style = MaterialTheme.typography.bodySmall)
             }
+        }
+    }
+}
+
+@Composable
+private fun TimerSection(
+    timerHours: Int?,
+    onSwitchOffIn: (Int) -> Unit,
+) {
+    Column(
+        modifier = Modifier.padding(horizontal = Spacing.base),
+        verticalArrangement = Arrangement.spacedBy(Spacing.tight),
+    ) {
+        Text(stringResource(R.string.light_timer), style = MaterialTheme.typography.titleMedium)
+        Row(horizontalArrangement = Arrangement.spacedBy(Spacing.base)) {
+            for (hours in 1..2) {
+                OutlinedButton(onClick = { onSwitchOffIn(hours) }, modifier = Modifier.weight(1f)) {
+                    Text(pluralStringResource(R.plurals.light_timer_off_in, hours, hours))
+                }
+            }
+        }
+        if (timerHours != null) {
+            Text(
+                pluralStringResource(R.plurals.light_timer_asked, timerHours, timerHours),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }

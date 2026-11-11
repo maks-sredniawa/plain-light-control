@@ -128,6 +128,18 @@ class LightViewModelTest {
             viewModel.state.first { it.light?.name == "Kitchen" }
         }
 
+    @Test
+    fun `the timer is reported as asked until the next command`() =
+        runTest {
+            preferences.saveLight(light)
+            val viewModel = open()
+            viewModel.switchOffIn(2)
+            viewModel.state.first { it.timerHours == 2 }
+            assertEquals(listOf<LightCommand>(LightCommand.Timer(2)), sent.toList())
+            viewModel.switchOff()
+            viewModel.state.first { it.timerHours == null }
+        }
+
     private suspend fun TestScope.open(): LightViewModel {
         val viewModel = LightViewModel(light.id, preferences, transmitter, lastSent)
         backgroundScope.launch { viewModel.state.collect {} }

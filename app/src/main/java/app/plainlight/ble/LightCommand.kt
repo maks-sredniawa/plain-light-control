@@ -28,6 +28,11 @@ sealed interface LightCommand {
     data class ColourTemperature(
         val coldness: Float,
     ) : LightCommand
+
+    /** Switch off after [hours]; the lamp keeps the time. Whole hours are all the vendor app's captures show. */
+    data class Timer(
+        val hours: Int,
+    ) : LightCommand
 }
 
 sealed interface SendResult {

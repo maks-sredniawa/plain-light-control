@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.UUID
 
@@ -32,6 +33,15 @@ data class LightUiState(
     val setting: LightSetting = LightSetting(),
     val problem: SendResult? = null,
     val removed: Boolean = false,
+    /** What the light was last asked to switch off in. The lamp keeps the time and cannot say whether it is counting. */
+    val timerHours: Int? = null,
+)
+
+private data class ScreenState(
+    val preview: LightSetting? = null,
+    val problem: SendResult? = null,
+    val removed: Boolean = false,
+    val timerHours: Int? = null,
 )
 
 class LightViewModel(
@@ -40,37 +50,44 @@ class LightViewModel(
     private val transmitter: LightTransmitter,
     private val lastSent: LastSent,
 ) : ViewModel() {
-    private val preview = MutableStateFlow<LightSetting?>(null)
-    private val problem = MutableStateFlow<SendResult?>(null)
-    private val removed = MutableStateFlow(false)
+    private val screen = MutableStateFlow(ScreenState())
 
     val state: StateFlow<LightUiState> =
         combine(
-            preferences.lights.map { all ->
-                all.firstOrNull { it.id == lightId }
-            },
+            preferences.lights.map { all -> all.firstOrNull { it.id == lightId } },
             lastSent.of(lightId),
-            preview,
-            problem,
-            removed,
-        ) { light, sent, preview, problem, removed ->
-            LightUiState(light, preview ?: sent ?: light?.favourite ?: LightSetting(), problem, removed)
+            screen,
+        ) { light, sent, screen ->
+            LightUiState(
+                light = light,
+                setting = screen.preview ?: sent ?: light?.favourite ?: LightSetting(),
+                problem = screen.problem,
+                removed = screen.removed,
+                timerHours = screen.timerHours,
+            )
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LightUiState())
 
     fun switchOn() =
         withLight { light ->
-            preview.value = null
+            screen.update { it.copy(preview = null) }
             transmitter.switchOn(light, lastSent)
         }
 
     fun switchOff() = withLight { transmitter.send(it.address, LightCommand.Off) }
 
+    fun switchOffIn(hours: Int) =
+        withLight { light ->
+            transmitter
+                .send(light.address, LightCommand.Timer(hours))
+                .ifSent { screen.update { it.copy(timerHours = hours) } }
+        }
+
     fun previewBrightness(level: Float) {
-        preview.value = current().copy(brightness = level)
+        screen.update { it.copy(preview = current().copy(brightness = level)) }
     }
 
     fun previewColdness(coldness: Float) {
-        preview.value = current().copy(coldness = coldness)
+        screen.update { it.copy(preview = current().copy(coldness = coldness)) }
     }
 
     fun sendBrightness() =
@@ -105,7 +122,7 @@ class LightViewModel(
 
     fun applyScene(scene: Scene) =
         withLight { light ->
-            preview.value = null
+            screen.update { it.copy(preview = null) }
             transmitter.switchOn(light, scene.setting, lastSent)
         }
 
@@ -127,12 +144,12 @@ class LightViewModel(
     fun remove() {
         viewModelScope.launch {
             preferences.removeLight(lightId)
-            removed.value = true
+            screen.update { it.copy(removed = true) }
         }
     }
 
     fun dismissProblem() {
-        problem.value = null
+        screen.update { it.copy(problem = null) }
     }
 
     private fun current(): LightSetting = state.value.setting
@@ -142,7 +159,9 @@ class LightViewModel(
     private fun withLight(action: suspend (Light) -> SendResult) {
         viewModelScope.launch {
             val light = light() ?: return@launch
-            problem.value = action(light).takeIf { it != SendResult.Sent }
+            screen.update { it.copy(timerHours = null) }
+            val result = action(light).takeIf { it != SendResult.Sent }
+            screen.update { it.copy(problem = result) }
         }
     }
 
