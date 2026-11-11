@@ -124,3 +124,17 @@ The first release.
 ```
 Pierwsze wydanie.
 ```
+
+### 0.2.0 — your light, from the phone
+
+**English** — 185/500:
+
+```
+Add your ceiling light and control it from your phone: on, off, brightness and colour. On brings back the setting you remembered. In English and Polish, with no account and no internet.
+```
+
+**Polish** — 193/500:
+
+```
+Dodaj swoją lampę sufitową i steruj nią z telefonu: włączanie, wyłączanie, jasność i barwa. Przycisk Włącz przywraca zapamiętane ustawienie. Po polsku i po angielsku, bez konta i bez internetu.
+```
