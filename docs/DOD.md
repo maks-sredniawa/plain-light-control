@@ -35,11 +35,8 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
 ## Before the first upload
 
 - [x] **Delete what the app does not need.** Room, photos, backup export/restore and reminders went 2026-11-11; the tip stays.
-- [ ] **Decide `minSdk` deliberately, before launch.** The direction is asymmetric: raising it later
-      strands existing installs on the last build that fitted them, lowering it later is free. If the
-      only phone in the loop sits at the top of the range, every `SDK_INT` branch below it ships
-      unvalidated — the first app built from this template raised 26 to 33 for exactly that reason. Move CI's floor legs with it,
-      and write the reason beside `minSdk` in `app/build.gradle.kts`, where the next person to touch it reads it.
+- [x] **Decide `minSdk` deliberately, before launch.** 26, kept on 2026-11-11: CI and the `urgent-api26`
+      emulator exercise it, and BLE advertising needs nothing newer. The reason sits beside `minSdk`.
 - [x] **Replace the placeholder mark.** Bulb on yellow, 2026-11-11; provenance in `art/README.md`.
       Its two colours are the icon's own until the palette (below) is chosen around them.
 - [x] **Replace the placeholder domain.** Items deleted 2026-11-11; the home screen is an empty **Lights** list.
