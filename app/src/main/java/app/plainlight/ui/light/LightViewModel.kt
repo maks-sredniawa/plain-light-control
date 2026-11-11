@@ -68,7 +68,7 @@ class LightViewModel(
                 timerHours = screen.timerHours,
                 simpleMode = simpleMode,
             )
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LightUiState())
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), firstState())
 
     fun switchOn() =
         withLight { light ->
@@ -162,7 +162,17 @@ class LightViewModel(
         screen.update { it.copy(problem = null) }
     }
 
-    private fun current(): LightSetting = state.value.setting
+    private fun firstState(): LightUiState {
+        val stored = preferences.lastRead ?: return LightUiState()
+        val light = stored.lights.firstOrNull { it.id == lightId }
+        return LightUiState(
+            light = light,
+            setting = lastSent.now(lightId) ?: light?.favourite ?: LightSetting(),
+            simpleMode = stored.simpleMode,
+        )
+    }
+
+    private fun current(): LightSetting = screen.value.preview ?: state.value.setting
 
     private suspend fun light(): Light? = preferences.lights.first().firstOrNull { it.id == lightId }
 

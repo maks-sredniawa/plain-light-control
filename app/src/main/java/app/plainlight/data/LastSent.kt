@@ -15,6 +15,8 @@ class LastSent {
 
     fun of(lightId: String): Flow<LightSetting?> = settings.map { it[lightId] }
 
+    fun now(lightId: String): LightSetting? = settings.value[lightId]
+
     fun update(
         light: Light,
         change: (LightSetting) -> LightSetting,
