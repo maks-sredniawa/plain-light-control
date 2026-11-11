@@ -62,7 +62,8 @@ class BleLightTransmitter(
                 .Builder()
                 .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
                 .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
-                .setConnectable(false)
+                // Android writes the flags structure only into a connectable advertisement, and the lamp ignores a packet without it.
+                .setConnectable(true)
                 .build()
         var callback: AdvertiseCallback? = null
         val started =
