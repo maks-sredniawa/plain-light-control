@@ -38,7 +38,7 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
 - [x] **Decide `minSdk` deliberately, before launch.** 26, kept on 2026-11-11: CI and the `urgent-api26`
       emulator exercise it, and BLE advertising needs nothing newer. The reason sits beside `minSdk`.
 - [x] **Replace the placeholder mark.** Bulb on yellow, 2026-11-11; provenance in `art/README.md`.
-      Its two colours are the icon's own until the palette (below) is chosen around them.
+      The palette's tertiary seed is the icon's yellow.
 - [x] **Replace the placeholder domain.** Items deleted 2026-11-11; the home screen is an empty **Lights** list.
 - [ ] **Rewrite `scripts/edge-to-edge.py`'s SCENES** against your screens. Until then the nightly
       walks screens that do not exist, and `screenshots.py` cannot shoot a listing.
@@ -46,8 +46,7 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
       EXPECTED_ORIENTATION describe the template. Run all four `aab-*.py` scripts against a local
       `bundleRelease` **before the first tag** — the first app built from it found its stale table in the publish
       workflow, after the tag, with the version already spent.
-- [ ] **Choose the palette.** Four seeds in `scripts/gen_scheme.py`, regenerate `theme/Color.kt`,
-      read the contrast report it prints on stderr.
+- [x] **Choose the palette.** Teal on warm paper, 2026-11-11; the seeds are in `scripts/gen_scheme.py`.
 - [ ] **Make the support address work both ways.** `bootstrap.py` compiled in
       `<repo>.support@maksforge.com` (or `--support`) and wrote it into the site, the privacy policy
       and the Play docs. Mail to it arrives through the domain's catch-all; replying from it needs the
