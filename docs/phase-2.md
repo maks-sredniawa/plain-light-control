@@ -83,8 +83,8 @@ reports the first problem, if any, in the usual banner.
 
 ## 5. The Simple mode setting
 
-A switch in Settings, **on by default** (the app's first user is not technical; the person setting
-it up turns it off for themselves). Stored by name in `AppPreferences`, listed in `Keys.SETTINGS`.
+A switch in Settings, **off by default**: the app opens with Full controls, and whoever sets it up
+for someone non-technical turns Simple mode on. Stored by name in `AppPreferences`, listed in `Keys.SETTINGS`.
 
 | | Simple mode on | Simple mode off (*Full controls*) |
 | --- | --- | --- |
