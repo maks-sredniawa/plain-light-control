@@ -99,13 +99,16 @@ without it), and the Licences screen, which now lists the ported code under MIT
 
 ## Readings
 
-Taken beside the lamp with a debug build. None yet.
+Taken beside the lamp with a debug build. **None of R1–R5 has been read.** On 2026-11-11 the owner
+chose to test on emulators only that day and to assume the real lamp behaves; each row below says
+which. An assumed row is still owed a reading the first time the app meets the lamp, and R3 decides
+whether the colour slider is backwards.
 
 | # | Reading | Command | Result |
 | --- | --- | --- | --- |
-| R1 | Which variant pairs, and the blink happens | *Add a light* on the phone | *(pending)* |
-| R2 | On, Off, and brightness at 5 %, 50 %, 100 % | Simple mode | *(pending)* |
-| R3 | Which end of the colour slider is warm | Simple mode, slider to each end | *(pending)* |
-| R4 | The pairing window is about 5 seconds, as the copy says | *Add a light*, tap at 3 s and at 10 s | *(pending)* |
-| R5 | The remote still works after the app pairs | the remote | *(pending)* |
-| R6 | A send with Bluetooth off, and with the permission denied, shows the banner | Simple mode | *(pending)* |
+| R1 | Which variant pairs, and the blink happens | *Add a light* on the phone | **assumed by the owner, not read** (2026-11-11) |
+| R2 | On, Off, and brightness at 5 %, 50 %, 100 % | Simple mode | **assumed by the owner, not read** (2026-11-11) |
+| R3 | Which end of the colour slider is warm | Simple mode, slider to each end | **assumed by the owner, not read** (2026-11-11) |
+| R4 | The pairing window is about 5 seconds, as the copy says | *Add a light*, tap at 3 s and at 10 s | **assumed by the owner, not read** (2026-11-11) |
+| R5 | The remote still works after the app pairs | the remote | **assumed by the owner, not read** (2026-11-11) |
+| R6 | A send with Bluetooth off, and with the permission denied, shows the banner | Simple mode | **read on the pixel-api36 emulator**: both banners show (QA, 2026-11-11) |

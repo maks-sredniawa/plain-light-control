@@ -81,6 +81,8 @@ android {
         // package name is fixed the moment the app entry is created. Deliberately allowed to differ
         // from `namespace` for that reason — see docs/adr/0002.
         applicationId = "com.maksforge.plainlight"
+        // 26 is validated, not hoped for: CI's instrumented and edge-to-edge legs and the urgent-api26
+        // emulator run at it, and the lamps need nothing newer (advertising has no location ask).
         minSdk = 26
         targetSdk = 36
         versionCode = gitVersionCode

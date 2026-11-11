@@ -9,7 +9,9 @@ user-facing word genuinely differ, both are written here with the difference sta
 | Term | Means | Not |
 | --- | --- | --- |
 | **Light** | one lamp, bulb or plug the app controls, with its settings kept per light. The user-facing word and the code word | device, bulb, lamp |
-| **Simple mode** | the view with only on, off and brightness, for someone who isn't technical | basic mode, easy mode |
+| **Simple mode** | the setting, on by default, that leaves a light's screen with only On, Off and brightness | basic mode, easy mode |
+| **Full controls** | Simple mode switched off: colour, scenes, the timer, rename and remove | advanced mode, expert mode |
+| **Scene** | a named brightness and colour for one light, applied with one tap; three come ready-made | preset (in UI copy), mood, favourite |
 | **Dashboard** | the separate personal dashboard a light can also be added to. How it reaches the light is still open (`docs/phase-0.md`) | home, favourites |
 | **Tip** | a one-off payment to the developer through Google Play that **unlocks nothing** (ADR-0007). The home screen mentions it once per install; Help and feedback offers it for good | donation, support the project, premium, supporter |
 
