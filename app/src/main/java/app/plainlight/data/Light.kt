@@ -26,8 +26,13 @@ data class Light(
     val controllerId: Long,
     val favourite: LightSetting = LightSetting(),
     val scenes: List<Scene> = presetScenes,
+    val lastUsed: LightSetting? = null,
+    val favouriteRemembered: Boolean = false,
 ) {
     val address: LightAddress get() = LightAddress(protocol, controllerId)
+
+    /** What On brings back: a favourite the user remembered, else what was last sent, since the lamp forgets it at the wall switch. */
+    val onSetting: LightSetting get() = if (favouriteRemembered) favourite else lastUsed ?: favourite
 }
 
 private val json =
