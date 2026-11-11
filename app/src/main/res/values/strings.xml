@@ -33,6 +33,7 @@
     <string name="lights_add">Add a light</string>
     <string name="lights_on">On</string>
     <string name="lights_off">Off</string>
+    <string name="lights_all_off">All off</string>
     <string name="light_brightness">Brightness</string>
     <string name="light_colour">Colour</string>
     <string name="light_warm">Warm</string>

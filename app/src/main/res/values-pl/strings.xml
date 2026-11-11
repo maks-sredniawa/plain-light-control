@@ -19,6 +19,7 @@
     <string name="lights_add">Dodaj światło</string>
     <string name="lights_on">Włącz</string>
     <string name="lights_off">Wyłącz</string>
+    <string name="lights_all_off">Wyłącz wszystkie</string>
     <string name="light_brightness">Jasność</string>
     <string name="light_colour">Barwa</string>
     <string name="light_warm">Ciepła</string>
