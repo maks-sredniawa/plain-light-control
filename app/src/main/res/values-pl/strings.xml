@@ -26,7 +26,7 @@
     <string name="light_cool">Zimna</string>
     <string name="light_remember">Zapamiętaj to ustawienie</string>
     <string name="light_remember_hint">Przycisk Włącz zawsze przywraca zapamiętaną tu jasność i barwę.</string>
-    <string name="light_timer">Wyłącz później</string>
+    <string name="light_timer">Wyłącznik czasowy</string>
     <plurals name="light_timer_off_in">
         <item quantity="one">Wyłącz za %d godzinę</item>
         <item quantity="few">Wyłącz za %d godziny</item>
@@ -84,6 +84,8 @@
     <string name="lights_tip_ask_accept">Zostaw napiwek</string>
     <string name="lights_tip_ask_decline">Nie, dziękuję</string>
 
+    <string name="settings_simple_mode">Tryb prosty</string>
+    <string name="settings_simple_mode_hint">Ekran światła pokazuje tylko Włącz, Wyłącz i jasność. Wyłącz ten tryb, aby mieć też barwę, sceny, wyłącznik czasowy, zmianę nazwy i usuwanie.</string>
     <string name="settings_appearance">Wygląd</string>
     <string name="settings_theme_system">Systemowy</string>
     <string name="settings_theme_light">Jasny</string>
@@ -96,9 +98,9 @@
     <string name="settings_language_report_hint">Napisz, jeśli jakieś słowo jest nie tak w twoim języku. Otwiera aplikację pocztową z już wpisanym językiem, w którym czytasz.</string>
     <string name="settings_data">Dane</string>
     <string name="settings_restore">Przywróć ustawienia domyślne</string>
-    <string name="settings_restore_hint">Motyw, kolory i język</string>
+    <string name="settings_restore_hint">Tryb prosty, motyw, kolory i język</string>
     <string name="settings_restore_confirm_title">Przywrócić ustawienia domyślne?</string>
-    <string name="settings_restore_confirm_body">Motyw, kolory i język wrócą do wartości początkowych. Tego nie można cofnąć.</string>
+    <string name="settings_restore_confirm_body">Tryb prosty, motyw, kolory i język wrócą do wartości początkowych. Tego nie można cofnąć.</string>
     <string name="settings_restore_confirm">Przywróć</string>
     <string name="settings_about">O aplikacji</string>
     <string name="settings_support">Pomoc i opinie</string>

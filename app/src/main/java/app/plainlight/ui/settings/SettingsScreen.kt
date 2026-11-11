@@ -54,6 +54,14 @@ fun SettingsScreen(
         topBar = { TopAppBar(title = { Text(stringResource(R.string.tab_settings)) }) },
     ) { insets ->
         Column(modifier = Modifier.padding(insets).verticalScroll(rememberScrollState())) {
+            SectionHeader(stringResource(R.string.tab_lights))
+            SwitchRow(
+                title = stringResource(R.string.settings_simple_mode),
+                subtitle = stringResource(R.string.settings_simple_mode_hint),
+                checked = state.simpleMode,
+                onChange = viewModel::setSimpleMode,
+            )
+
             SectionHeader(stringResource(R.string.settings_appearance))
 
             Row(modifier = Modifier.padding(horizontal = Spacing.base)) {

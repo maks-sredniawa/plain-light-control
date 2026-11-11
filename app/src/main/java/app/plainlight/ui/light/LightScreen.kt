@@ -59,8 +59,10 @@ fun LightScreen(
         onBack = onBack,
         modifier = modifier,
         actions = {
-            IconButton(onClick = { renaming = true }) {
-                Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.light_rename))
+            if (!state.simpleMode) {
+                IconButton(onClick = { renaming = true }) {
+                    Icon(Icons.Filled.Edit, contentDescription = stringResource(R.string.light_rename))
+                }
             }
         },
     ) { inner ->
@@ -87,36 +89,38 @@ fun LightScreen(
                 onDone = viewModel::sendBrightness,
                 range = MIN_BRIGHTNESS..1f,
             )
-            LabelledSlider(
-                label = stringResource(R.string.light_colour),
-                value = state.setting.coldness,
-                onChange = viewModel::previewColdness,
-                onDone = viewModel::sendColdness,
-                start = stringResource(R.string.light_warm),
-                end = stringResource(R.string.light_cool),
-            )
-            Column(
-                modifier = Modifier.padding(horizontal = Spacing.base),
-                verticalArrangement = Arrangement.spacedBy(Spacing.tight),
-            ) {
-                FilledTonalButton(onClick = viewModel::remember, modifier = Modifier.fillMaxWidth()) {
-                    Text(stringResource(R.string.light_remember))
-                }
-                Text(
-                    stringResource(R.string.light_remember_hint),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+            if (!state.simpleMode) {
+                LabelledSlider(
+                    label = stringResource(R.string.light_colour),
+                    value = state.setting.coldness,
+                    onChange = viewModel::previewColdness,
+                    onDone = viewModel::sendColdness,
+                    start = stringResource(R.string.light_warm),
+                    end = stringResource(R.string.light_cool),
                 )
-            }
-            ScenesSection(
-                scenes = light.scenes,
-                onApply = viewModel::applyScene,
-                onSave = viewModel::saveScene,
-                onDelete = { viewModel.deleteScene(it.id) },
-            )
-            TimerSection(timerHours = state.timerHours, onSwitchOffIn = viewModel::switchOffIn)
-            TextButton(onClick = { confirmRemove = true }, modifier = Modifier.padding(horizontal = Spacing.base)) {
-                Text(stringResource(R.string.light_remove))
+                Column(
+                    modifier = Modifier.padding(horizontal = Spacing.base),
+                    verticalArrangement = Arrangement.spacedBy(Spacing.tight),
+                ) {
+                    FilledTonalButton(onClick = viewModel::remember, modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.light_remember))
+                    }
+                    Text(
+                        stringResource(R.string.light_remember_hint),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                ScenesSection(
+                    scenes = light.scenes,
+                    onApply = viewModel::applyScene,
+                    onSave = viewModel::saveScene,
+                    onDelete = { viewModel.deleteScene(it.id) },
+                )
+                TimerSection(timerHours = state.timerHours, onSwitchOffIn = viewModel::switchOffIn)
+                TextButton(onClick = { confirmRemove = true }, modifier = Modifier.padding(horizontal = Spacing.base)) {
+                    Text(stringResource(R.string.light_remove))
+                }
             }
         }
     }

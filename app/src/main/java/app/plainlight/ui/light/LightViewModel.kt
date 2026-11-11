@@ -35,6 +35,8 @@ data class LightUiState(
     val removed: Boolean = false,
     /** What the light was last asked to switch off in. The lamp keeps the time and cannot say whether it is counting. */
     val timerHours: Int? = null,
+    /** On until the store says otherwise, so the first frame never flashes Full controls at someone who should not see them. */
+    val simpleMode: Boolean = true,
 )
 
 private data class ScreenState(
@@ -56,14 +58,16 @@ class LightViewModel(
         combine(
             preferences.lights.map { all -> all.firstOrNull { it.id == lightId } },
             lastSent.of(lightId),
+            preferences.simpleMode,
             screen,
-        ) { light, sent, screen ->
+        ) { light, sent, simpleMode, screen ->
             LightUiState(
                 light = light,
                 setting = screen.preview ?: sent ?: light?.favourite ?: LightSetting(),
                 problem = screen.problem,
                 removed = screen.removed,
                 timerHours = screen.timerHours,
+                simpleMode = simpleMode,
             )
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LightUiState())
 
