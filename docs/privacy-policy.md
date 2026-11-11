@@ -88,4 +88,4 @@ in the repository.
 
 ## Contact
 
-**<support email>**
+**plain-light-control.support@maksforge.com**

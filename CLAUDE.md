@@ -1,7 +1,10 @@
-# <app name>
+# Plain Light
 
-<One paragraph: what this app does, for whom, and the one constraint that shapes everything —
-"free, ad-free, no server, all data on the device", or whatever replaces it.>
+An Android app that controls smart lights whose own app is only in Chinese, in the user's own
+language. It reads each light's details, keeps its settings per device and controls them all in one
+place, with a simple mode (on, off, brightness) plain enough for someone who isn't technical. A light
+can also be added to a separate personal dashboard. Free, no ads, no account. Which lights and
+protocols it supports is still open: see the plan in `~/repos/local/ideas/plain-light-control.md`.
 
 - **Vocabulary:** [`CONTEXT.md`](CONTEXT.md) — use these terms in code and UI.
 - **Decisions and why:** [`docs/adr/`](docs/adr/) — read before changing anything they cover.
