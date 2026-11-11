@@ -207,9 +207,11 @@ class LightViewModelTest {
             viewModel.state.first { it.problem == SendResult.BluetoothOff }
             assertEquals(0.3f, viewModel.state.value.setting.brightness)
 
+            answer = SendResult.PermissionMissing
             viewModel.previewColdness(0.1f)
             viewModel.sendColdness()
-            viewModel.state.first { it.setting == LightSetting(brightness = 0.3f, coldness = 0.5f) }
+            viewModel.state.first { it.problem == SendResult.PermissionMissing }
+            assertEquals(LightSetting(brightness = 0.3f, coldness = 0.5f), viewModel.state.value.setting)
         }
 
     private suspend fun TestScope.open(): LightViewModel {
