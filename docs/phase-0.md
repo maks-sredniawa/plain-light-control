@@ -138,9 +138,8 @@ What the verdict does to the rest:
 strip is done: 59 files gone, the home screen is an empty *Lights* screen, and every gate passes
 (`test lint assembleDebug`, translation, schema, `aab-permissions.py` on a local bundle).
 
-⚠ **`app/src/androidTest/` is now empty, so CI's instrumented job fails on its zero-test guard.** It
-stays red until Phase 1 brings the first real device test (the light-control path is the natural
-one); deleting the job is the alternative, and the owner's call.
+The strip left `app/src/androidTest/` empty, which fails CI's zero-test guard; Phase 1's
+`LightsStoreTest` closed that (2026-11-11).
 
 | Module | Proposal | Why |
 | --- | --- | --- |

@@ -87,9 +87,9 @@ without it), and the Licences screen, which now lists the ported code under MIT
 
 ## Known gaps, deliberately
 
-- **CI's instrumented job has no test yet** and fails its zero-test guard. Emulators cannot
-  advertise, so the light path cannot be a device test there; a DataStore round trip of the lights
-  list on a device is the candidate.
+- **The light path has no device test.** An emulator can sometimes advertise (API 36 did, API 26 and
+  30 did not), but no lamp hears it, so only R1–R6 prove it. CI's instrumented job runs
+  `LightsStoreTest` instead: the lights list survives its store being reopened.
 - **Android writes its own flags byte**; the vendor app's captures show `0x19` and `0x1A`, so the lamp
   is not reading it. R1 confirms.
 - **Index 4** is copied from the vendor app's own commands; ha-ble-adv's default differs. R1 confirms
