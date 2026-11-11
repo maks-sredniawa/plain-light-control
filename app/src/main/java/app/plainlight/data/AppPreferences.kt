@@ -25,11 +25,10 @@ enum class ThemeMode {
  * still write on the main thread at the wrong moment; DataStore is `suspend`-only and transactional,
  * so there is no API here that can stall a frame.
  *
- * Kotlin note: every read is a `Flow`, not a value. There is no "current value" to ask for
- * synchronously — the first emission arrives after a disk read. That matters at startup: a screen
- * collecting `themeMode` gets `SYSTEM` for one frame and the stored value on the next, which is a
- * visible flash. [themeModeNow] exists for the one caller that must have the answer *before* the
- * first frame, and it is `suspend` because reading a file is.
+ * Kotlin note: every read is a `Flow`, whose first emission arrives after a disk read. [lastRead]
+ * is the synchronous value a first frame starts from: the last one read or written, null only
+ * before the first read, which `MainApplication.onCreate` forces. [themeModeNow] stays for that one
+ * caller, and it is `suspend` because reading a file is.
  *
  * ## Adding a preference
  *
