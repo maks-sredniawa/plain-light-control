@@ -39,10 +39,11 @@ class LightViewModelTest {
         AppPreferences(PreferenceDataStoreFactory.create(scope = scope) { folder.newFile("app.preferences_pb") })
     }
     private val sent = CopyOnWriteArrayList<LightCommand>()
+    private var answer: SendResult = SendResult.Sent
     private val transmitter =
         LightTransmitter { _, command ->
             sent += command
-            SendResult.Sent
+            answer
         }
     private val lastSent = LastSent()
     private val light =
@@ -147,6 +148,26 @@ class LightViewModelTest {
             assertEquals(listOf<LightCommand>(LightCommand.Timer(2)), sent.toList())
             viewModel.switchOff()
             viewModel.state.first { it.timerHours == null }
+        }
+
+    @Test
+    fun `after a failed send the sliders go back to what was last sent`() =
+        runTest {
+            preferences.saveLight(light)
+            val viewModel = open()
+            viewModel.previewBrightness(0.3f)
+            viewModel.sendBrightness()
+            lastSent.of(light.id).first { it?.brightness == 0.3f }
+
+            answer = SendResult.BluetoothOff
+            viewModel.previewBrightness(0.8f)
+            viewModel.sendBrightness()
+            viewModel.state.first { it.problem == SendResult.BluetoothOff }
+            assertEquals(0.3f, viewModel.state.value.setting.brightness)
+
+            viewModel.previewColdness(0.1f)
+            viewModel.sendColdness()
+            viewModel.state.first { it.setting == LightSetting(brightness = 0.3f, coldness = 0.5f) }
         }
 
     private suspend fun TestScope.open(): LightViewModel {
