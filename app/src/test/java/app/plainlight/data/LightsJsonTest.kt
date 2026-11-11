@@ -91,6 +91,26 @@ class LightsJsonTest {
     }
 
     @Test
+    fun `a change keeps what a newer version stored under a favourite left at its default`() {
+        val stored = """{"id":"a","name":"Salon","protocol":"ZHIMEI_V2","controllerId":4660,"favourite":{"hue":3}}"""
+        val changed = changeLight("[$stored]", "a") { it.copy(name = "Kitchen") }
+        assertTrue(changed, """"hue":3""" in changed)
+    }
+
+    @Test
+    fun `a change keeps what a newer version stored on the untouched preset scenes`() {
+        val scenes =
+            presetScenes.joinToString(",") {
+                """{"id":"${it.id}","preset":"${it.preset}",""" +
+                    """"setting":{"brightness":${it.setting.brightness},"coldness":${it.setting.coldness}},"fade":2}"""
+            }
+        val stored = """[{"id":"a","name":"Salon","protocol":"ZHIMEI_V2","controllerId":4660,"scenes":[$scenes]}]"""
+        assertEquals(presetScenes, decodeLights(stored).single().scenes)
+        val changed = changeLight(stored, "a") { it.copy(name = "Kitchen") }
+        assertEquals(changed, 3, changed.split(""""fade":2""").size - 1)
+    }
+
+    @Test
     fun `a field reset to its default is not brought back from the stored entry`() {
         val changed =
             changeLight("[$fromNewerVersion]", "a") { it.copy(scenes = presetScenes, favourite = LightSetting()) }
