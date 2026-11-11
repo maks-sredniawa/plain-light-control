@@ -2,20 +2,40 @@ package app.plainlight.data
 
 import app.plainlight.ble.LightProtocol
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class LightsJsonTest {
     private val lamp = Light("a", "Salon", LightProtocol.ZHIMEI_V2, 0x1234L, LightSetting(0.3f, 0.1f))
+    private val unreadable = """{"id":"x","name":"Old","protocol":"ZHIMEI_V9","controllerId":1}"""
+
+    private fun encodeLights(lights: List<Light>): String? =
+        lights.fold(null as String?) { text, light -> putLight(text, light) }
 
     @Test
     fun `a list survives a round trip`() = assertEquals(listOf(lamp), decodeLights(encodeLights(listOf(lamp))))
 
     @Test
     fun `one unreadable entry is dropped and the rest kept`() {
-        val text = """[{"id":"x","name":"Old","protocol":"ZHIMEI_V9","controllerId":1},${encodeLights(
-            listOf(lamp),
-        ).removeSurrounding("[", "]")}]"""
+        val text = """[$unreadable,${encodeLights(listOf(lamp))!!.removeSurrounding("[", "]")}]"""
         assertEquals(listOf(lamp), decodeLights(text))
+    }
+
+    @Test
+    fun `an unreadable entry survives saving, changing and removing other lights`() {
+        val other = lamp.copy(id = "b", name = "Hall")
+        val saved = putLight(putLight("[$unreadable]", lamp), other)
+        val changed = changeLight(saved, lamp.id) { it.copy(name = "Kitchen") }
+        val removed = dropLight(changed, other.id)
+        assertEquals(listOf(lamp.copy(name = "Kitchen")), decodeLights(removed))
+        assertTrue(removed.startsWith("[$unreadable,"))
+    }
+
+    @Test
+    fun `an unreadable entry is replaced by a save with its id and removed with it, never changed`() {
+        assertEquals("[$unreadable]", changeLight("[$unreadable]", "x") { it.copy(name = "New") })
+        assertEquals(listOf(lamp.copy(id = "x")), decodeLights(putLight("[$unreadable]", lamp.copy(id = "x"))))
+        assertEquals("[]", dropLight("[$unreadable]", "x"))
     }
 
     @Test
