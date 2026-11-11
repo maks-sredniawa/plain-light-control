@@ -1,9 +1,5 @@
 # Vocabulary
 
-<The words this app uses, and the ones it does not. Fill this in early — it is cheap now and
-expensive later, because a name that is wrong in the model is wrong in the schema, the UI copy, every
-translation of it, and the URL scheme.>
-
 **The rule this file exists to enforce: one concept, one word, everywhere.** The entity, the DAO, the
 route key, the string resource and the sentence in the UI all use it. When the domain word and the
 user-facing word genuinely differ, both are written here with the difference stated.
@@ -12,13 +8,18 @@ user-facing word genuinely differ, both are written here with the difference sta
 
 | Term | Means | Not |
 | --- | --- | --- |
-| **Item** | *the placeholder — replace it* | |
+| **Light** | one lamp, bulb or plug the app controls, with its settings kept per light. The user-facing word and the code word | device, bulb, lamp |
+| **Simple mode** | the view with only on, off and brightness, for someone who isn't technical | basic mode, easy mode |
+| **Dashboard** | the separate personal dashboard a light can also be added to. How it reaches the light is still open (`docs/phase-0.md`) | home, favourites |
 | **Tip** | a one-off payment to the developer through Google Play that **unlocks nothing** (ADR-0007). The home screen mentions it once per install; Help and feedback offers it for good | donation, support the project, premium, supporter |
 
 ## Words we deliberately avoid
 
-<For example: "'delete' is reserved for something irreversible; anything recoverable is 'archived'."
-The value here is in the distinctions, not the definitions.>
+- **"Device"** means the phone, never a light. The idea's "settings kept per device" is *per light*
+  here.
+- **"Pair"** is the step inside *Add a light* where the lamp learns this app's controller ID. The lamp
+  is never *connected*: it only listens (`docs/phase-0.md`).
+- **"Status", "is on"**: the app cannot know a light's state, so no copy claims it.
 
 ## Naming conventions in code
 
