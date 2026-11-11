@@ -138,3 +138,17 @@ Add your ceiling light and control it from your phone: on, off, brightness and c
 ```
 Dodaj swoją lampę sufitową i steruj nią z telefonu: włączanie, wyłączanie, jasność i barwa. Przycisk Włącz przywraca zapamiętane ustawienie. Po polsku i po angielsku, bez konta i bez internetu.
 ```
+
+### 0.3.0 — scenes, a timer and Simple mode
+
+**English** — 332/500:
+
+```
+Every light now has scenes: Evening, Reading and Night light come ready-made, and you can save your own. Rename a light, ask it to switch itself off in one or two hours, and switch all your lights off at once. Simple mode, on by default, keeps a light's screen to On, Off and brightness; turn it off in Settings for everything else.
+```
+
+**Polish** — 344/500:
+
+```
+Każde światło ma teraz sceny: Wieczór, Czytanie i Lampka nocna są gotowe, a własne możesz zapisać. Możesz zmienić nazwę światła, poprosić je o wyłączenie za godzinę lub dwie i wyłączyć wszystkie światła naraz. Tryb prosty, domyślnie włączony, zostawia na ekranie światła tylko Włącz, Wyłącz i jasność. Wyłącz go w Ustawieniach, aby mieć resztę.
+```
