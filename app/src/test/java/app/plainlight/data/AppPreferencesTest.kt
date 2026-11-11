@@ -86,4 +86,15 @@ class AppPreferencesTest {
                 assertTrue(tipAsked.first())
             }
         }
+
+    @Test
+    fun `the values last read or written are held for a screen's first frame`() =
+        runBlocking {
+            assertEquals(null, preferences.lastRead)
+            store.edit { it[AppPreferences.Keys.SIMPLE_MODE] = false }
+            preferences.themeModeNow()
+            assertEquals(false, preferences.lastRead?.simpleMode)
+            preferences.setThemeMode(ThemeMode.DARK)
+            assertEquals(ThemeMode.DARK, preferences.lastRead?.themeMode)
+        }
 }

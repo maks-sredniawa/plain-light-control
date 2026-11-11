@@ -225,6 +225,18 @@ class LightViewModelTest {
             assertEquals(LightCommand.ColourTemperature(0.9f), sent.first())
         }
 
+    @Test
+    fun `the screen's first state is the stored light, mode and last sent setting, not the defaults`() =
+        runTest {
+            preferences.saveLight(light)
+            preferences.setSimpleMode(true)
+            lastSent.update(light) { it.copy(brightness = 0.2f) }
+            val first = LightViewModel(light.id, preferences, transmitter, lastSent).state.value
+            assertEquals(light.name, first.light?.name)
+            assertEquals(true, first.simpleMode)
+            assertEquals(0.2f, first.setting.brightness)
+        }
+
     private suspend fun TestScope.open(): LightViewModel {
         val viewModel = LightViewModel(light.id, preferences, transmitter, lastSent)
         backgroundScope.launch { viewModel.state.collect {} }

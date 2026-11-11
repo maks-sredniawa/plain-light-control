@@ -27,7 +27,12 @@ class SettingsViewModel(
 ) : ViewModel() {
     val state: StateFlow<SettingsUiState> =
         combine(preferences.themeMode, preferences.materialYou, preferences.simpleMode, ::SettingsUiState)
-            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), SettingsUiState())
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5_000),
+                preferences.lastRead?.let { SettingsUiState(it.themeMode, it.materialYou, it.simpleMode) }
+                    ?: SettingsUiState(),
+            )
 
     /**
      * **Both halves, and in this order.**
