@@ -124,6 +124,15 @@ class LightViewModelTest {
             preferences.saveLight(light)
             val viewModel = open()
             viewModel.rename(" ")
+            // DataStore applies edits in order, so a blank name the rename had written lands before this one returns.
+            preferences.updateLight(light.id) { it }
+            assertEquals(
+                "Lamp",
+                preferences.lights
+                    .first()
+                    .single()
+                    .name,
+            )
             viewModel.rename("  Kitchen ")
             viewModel.state.first { it.light?.name == "Kitchen" }
         }
