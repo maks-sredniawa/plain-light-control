@@ -102,7 +102,7 @@ class LightViewModelTest {
             lastSent.of(light.id).first { it?.brightness == 0.2f }
 
             val restarted = track(LightViewModel(light.id, preferences, transmitter, LastSent(preferences)))
-            backgroundScope.launch { restarted.state.collect {} }
+            backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { restarted.state.collect {} }
             restarted.state.first { it.light != null }
             sent.clear()
             restarted.switchOn()
@@ -254,7 +254,7 @@ class LightViewModelTest {
 
     private suspend fun TestScope.open(): LightViewModel {
         val viewModel = track(LightViewModel(light.id, preferences, transmitter, lastSent))
-        backgroundScope.launch { viewModel.state.collect {} }
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) { viewModel.state.collect {} }
         viewModel.state.first { it.light != null }
         return viewModel
     }
