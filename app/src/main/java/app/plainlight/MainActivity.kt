@@ -55,17 +55,18 @@ class MainActivity : AppCompatActivity() {
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
         }
 
+        // A Flow's first emission lands after the first frame, so the initial values are what that
+        // frame paints: seeded from what was last read, a recreated Activity (language switch,
+        // Restore to default) opens in the current theme rather than the one from process start.
+        val stored = app.preferences.lastRead
+
         setContent {
-            // Kotlin note: a plain `Flow` has no current value the way a `StateFlow` does, so
-            // collecting one as state needs an initial. `false` is also the stored default, which is
-            // what keeps the first frame from being the wrong palette and then repainting.
-            val materialYou by app.preferences.materialYou.collectAsStateWithLifecycle(initialValue = false)
-            // The initial value is the one `onCreate` already read off disk, not `SYSTEM`: this
-            // flow's first emission arrives after the first composition, so a stored `DARK` would
-            // otherwise light-flash on every cold start. `MainApplication` paid for that read before
-            // any Activity existed; spending it again here is free.
+            val materialYou by
+                app.preferences.materialYou.collectAsStateWithLifecycle(initialValue = stored?.materialYou ?: false)
             val themeMode by
-                app.preferences.themeMode.collectAsStateWithLifecycle(initialValue = app.startupThemeMode)
+                app.preferences.themeMode.collectAsStateWithLifecycle(
+                    initialValue = stored?.themeMode ?: app.startupThemeMode,
+                )
 
             AppTheme(themeMode = themeMode, dynamicColor = materialYou) {
                 Surface(

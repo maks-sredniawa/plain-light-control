@@ -68,7 +68,7 @@ class LightViewModel(
                 timerHours = screen.timerHours,
                 simpleMode = simpleMode,
             )
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LightUiState())
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), firstState())
 
     fun switchOn() =
         withLight { light ->
@@ -164,6 +164,16 @@ class LightViewModel(
 
     fun dismissProblem() {
         screen.update { it.copy(problem = null) }
+    }
+
+    private fun firstState(): LightUiState {
+        val stored = preferences.lastRead ?: return LightUiState()
+        val light = stored.lights.firstOrNull { it.id == lightId }
+        return LightUiState(
+            light = light,
+            setting = light?.lastSent ?: light?.favourite ?: LightSetting(),
+            simpleMode = stored.simpleMode,
+        )
     }
 
     /** Reads the preview where it is set: [state] only reflects it once its combine has run. */

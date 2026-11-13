@@ -48,7 +48,11 @@ class LightsViewModel(
                 showTipAsk = offers.isNotEmpty() && tipAskDue(asked, lights.size, installedAt, Instant.now()),
                 problem = problem,
             )
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), LightsUiState())
+        }.stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            LightsUiState(lights = preferences.lastRead?.lights.orEmpty()),
+        )
 
     init {
         // Prices are asked for only once the ask could otherwise be due — one product query saved
