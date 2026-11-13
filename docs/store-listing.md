@@ -52,7 +52,7 @@ The line that appears under the name in search results, and the most-read text i
 Switch and dim a Bluetooth ceiling light whose own app is only in Chinese.
 ```
 
-### Full description — 2830/4000
+### Full description — 3001/4000
 
 **No health or safety claims**, here or on any page the listing links to — Play's enforcement reads a
 linked page as part of the listing. Say what the app cannot do instead.
@@ -69,7 +69,7 @@ renders no markup. The block below is what `play-metadata.py` uploads, so the ou
 6. A last line pointing at the source: `github.com/maks-sredniawa/plain-light-control`.
 
 ```
-Some Bluetooth ceiling lights come with an app, 智美灯控PRO, that is only in Chinese. Plain Light controls the same lights in English or Polish: on, off, brightness and colour, on one plain screen.
+Some Bluetooth ceiling lights come with an app, 智美灯控PRO, that is only in Chinese. Plain Light is made for the same lights, in English or Polish: on, off, brightness and colour, on one plain screen.
 
 HOW IT WORKS
 • Add a light: switch it off at the wall, wait five seconds, switch it on again, then tap Pair within five seconds. The app switches the light off and back on, and asks you whether it did, because the light cannot tell it.
@@ -90,6 +90,7 @@ The app is free. You can leave the developer a tip through Google Play; it unloc
 
 WHAT IT CANNOT DO
 • It works only with lights that the 智美灯控PRO app controls. It does not work with other smart lights, or with lights on Wi-Fi.
+• Some lights that use the 智美灯控PRO app may not pair with Plain Light. They speak more than one version of their commands, and Plain Light does not know every one yet.
 • It cannot see whether a light is on, or what it is set to. The light only listens: the app sends a command and hears nothing back. The sliders show what the app last sent, so after someone uses the remote they can be out of date.
 • It cannot confirm that a light heard a command. If nothing happens, move closer and try again.
 • The phone has to be within a few metres of the light, with Bluetooth on.
@@ -117,10 +118,10 @@ Plain Light
 Włączaj i ściemniaj światło sufitowe Bluetooth z aplikacją tylko po chińsku.
 ```
 
-### Full description — 3152/4000
+### Full description — 3337/4000
 
 ```
-Niektóre światła sufitowe na Bluetooth mają aplikację 智美灯控PRO, która jest tylko po chińsku. Plain Light steruje tymi samymi światłami po polsku lub po angielsku: włączanie, wyłączanie, jasność i barwa, na jednym prostym ekranie.
+Niektóre światła sufitowe na Bluetooth mają aplikację 智美灯控PRO, która jest tylko po chińsku. Plain Light to aplikacja dla tych samych świateł, po polsku lub po angielsku: włączanie, wyłączanie, jasność i barwa, na jednym prostym ekranie.
 
 JAK TO DZIAŁA
 • Dodaj światło: wyłącz je włącznikiem na ścianie, odczekaj pięć sekund, włącz je ponownie, a potem w ciągu pięciu sekund dotknij Sparuj. Aplikacja wyłącza i ponownie włącza światło, a potem pyta cię, czy tak się stało, bo samo światło nie może jej tego powiedzieć.
@@ -141,6 +142,7 @@ Aplikacja jest darmowa. Możesz zostawić twórcy napiwek przez Google Play; nic
 
 CZEGO NIE POTRAFI
 • Działa tylko ze światłami, którymi steruje aplikacja 智美灯控PRO. Nie działa z innymi inteligentnymi światłami ani ze światłami na Wi-Fi.
+• Niektóre światła, które działają z aplikacją 智美灯控PRO, mogą nie sparować się z Plain Light. Używają więcej niż jednej wersji poleceń, a Plain Light nie zna jeszcze wszystkich.
 • Nie widzi, czy światło jest włączone ani jak jest ustawione. Światło tylko słucha: aplikacja wysyła polecenie i nie dostaje żadnej odpowiedzi. Suwaki pokazują to, co aplikacja wysłała ostatnio, więc gdy ktoś użyje pilota, mogą być nieaktualne.
 • Nie może potwierdzić, że światło odebrało polecenie. Jeśli nic się nie dzieje, podejdź bliżej i spróbuj ponownie.
 • Telefon musi być nie dalej niż kilka metrów od światła, z włączonym Bluetoothem.
@@ -185,7 +187,7 @@ default.
 The first release.
 ```
 
-**Polish** — 18/500:
+**Polish** — 17/500:
 
 ```
 Pierwsze wydanie.

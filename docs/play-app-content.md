@@ -5,7 +5,6 @@ fact that would change it**. The Console shows what was answered but never why, 
 when the app changes, when the questionnaire changes, and once a year. A re-declaration made from
 memory a year from now is how a true answer turns false.
 
-
 Two rules keep this file honest:
 
 - **The privacy policy and the Data safety form describe the same facts to two audiences**, and Play

@@ -5,7 +5,7 @@ title: Plain Light
 
 # Plain Light
 
-**Plain Light switches and dims Bluetooth ceiling lights whose own app, 智美灯控PRO, is only in
+**Plain Light switches and dims Bluetooth ceiling lights whose own app, <span lang="zh-Hans">智美灯控PRO</span>, is only in
 Chinese, and it does so in English or Polish.** Free, ad-free, and entirely on your own phone: no account, no sign-up, no server.
 
 ## What it does
@@ -33,17 +33,18 @@ Your remote and the light's own app keep working beside it.
   hears nothing back. So it cannot tell whether a light is on, what it is set to, or whether it heard
   a command. The sliders show what the app last sent, which is out of date after someone uses the
   remote.
-- **It works only with lights of this kind**: the ones the 智美灯控PRO app controls. Other smart
+- **It works only with lights of this kind**: the ones the <span lang="zh-Hans">智美灯控PRO</span> app controls. Other smart
   lights, and lights on Wi-Fi, do not respond to it.
+- **Some of those lights may not pair.** They speak more than one version of their commands, and
+  Plain Light does not know every one yet.
 - **The phone has to be near the light**, within a few metres, with Bluetooth on. Some phones cannot
   send the Bluetooth signal these lights listen for, and the app says so if yours is one of them.
 
 ## Your data stays on your device
 
 There is no backend to send anything to. Everything lives in the app's private storage on your phone,
-and Android's own backup, if you have it on, keeps a copy in your Google account. The details are in the
-
-**[Privacy Policy](privacy-policy.md)**.
+and Android's own backup, if you have it on, keeps a copy in your Google account. The details are
+in the **[Privacy Policy](privacy-policy.md)**.
 
 ## Support
 
