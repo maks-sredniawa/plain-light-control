@@ -23,12 +23,15 @@ import org.junit.rules.TemporaryFolder
 class SettingsViewModelTest {
     @get:Rule val folder = TemporaryFolder()
 
-    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val main = UnconfinedTestDispatcher()
+
+    /** On Dispatchers.IO a collection that starts mid-write can miss that write for good (DataStore 1.2.1), hanging a wait on it. */
+    private val scope = CoroutineScope(main + SupervisorJob())
     private val preferences by lazy {
         AppPreferences(PreferenceDataStoreFactory.create(scope = scope) { folder.newFile("app.preferences_pb") })
     }
 
-    @Before fun setUp() = Dispatchers.setMain(UnconfinedTestDispatcher())
+    @Before fun setUp() = Dispatchers.setMain(main)
 
     @After fun tearDown() {
         Dispatchers.resetMain()
