@@ -10,6 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
@@ -31,7 +32,7 @@ class AddLightViewModelTest {
     private val main = UnconfinedTestDispatcher()
 
     /** On Dispatchers.IO a collection that starts mid-write can miss that write for good (DataStore 1.2.1), hanging a wait on it. */
-    private val scope = CoroutineScope(main + SupervisorJob())
+    private val scope = CoroutineScope(StandardTestDispatcher(main.scheduler) + SupervisorJob())
     private val preferences by lazy {
         AppPreferences(PreferenceDataStoreFactory.create(scope = scope) { folder.newFile("app.preferences_pb") })
     }
