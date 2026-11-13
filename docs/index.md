@@ -1,32 +1,42 @@
 ---
 layout: default
-title: <App name>
+title: Plain Light
 ---
 
-# <App name>
+# Plain Light
 
-<!--
-    The site root, published from `docs/` at maksforge.com/<repo>/. It exists for two reasons: Play's listing
-    asks for a Website, and the privacy policy needs a hosted URL. Both come free from a public
-    repo — no hosting, no domain, no bill.
-
-    Write it for someone who found the app in the store and wants to know what it is before
-    installing. It is not the store listing (that is `store-listing.md`, which scripts parse) and it
-    is not the README (that is for someone reading the code).
--->
-
-**<One sentence about what it does.>** <And the constraint that makes it different — "Free, ad-free,
-and entirely on your own phone: no account, no sign-up, no server.">
+**Plain Light switches and dims Bluetooth ceiling lights whose own app, 智美灯控PRO, is only in
+Chinese, and it does so in English or Polish.** Free, ad-free, and entirely on your own phone: no account, no sign-up, no server.
 
 ## What it does
 
-- **<Feature>** — <what it is for, in the user's words, not the schema's>.
-- **<Feature>** — <…>.
+- **Add a light** — switch it off at the wall, switch it on again, and tap Pair. The app switches
+  the light off and back on and asks you whether it did.
+- **On and Off** — for each light from the list, or every light at once with *All off*.
+- **Brightness and colour** — dim the light, and set its colour from warm to cool.
+- **Remember this setting** — On brings back the brightness and colour you remembered. Until you
+  remember one, On brings back the last setting you sent.
+- **Scenes** — Evening, Reading and Night light come ready-made, and you can save your own for each
+  light.
+- **Switch-off timer** — ask a light to switch itself off in one or two hours. The light keeps the
+  time, so the app does not need to stay open.
+- **Names** — give each light a name you will recognise.
+- **Simple mode** — a setting that leaves a light's screen with only On, Off and brightness, for
+  whoever finds that easier. It starts off.
+- **English and Polish**, with a light, dark or system theme.
 
-## <The honest limitation>
+Your remote and the light's own app keep working beside it.
 
-<If the app is in a domain where people might over-trust it — health, finance, safety — say plainly
-what it does not do. This section costs nothing and is the one people remember.>
+## What it cannot do
+
+- **It cannot see the light.** The light only listens: the app sends a command over Bluetooth and
+  hears nothing back. So it cannot tell whether a light is on, what it is set to, or whether it heard
+  a command. The sliders show what the app last sent, which is out of date after someone uses the
+  remote.
+- **It works only with lights of this kind**: the ones the 智美灯控PRO app controls. Other smart
+  lights, and lights on Wi-Fi, do not respond to it.
+- **The phone has to be near the light**, within a few metres, with Bluetooth on. Some phones cannot
+  send the Bluetooth signal these lights listen for, and the app says so if yours is one of them.
 
 ## Your data stays on your device
 
