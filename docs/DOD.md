@@ -62,10 +62,8 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
       page. Replace `description` in `docs/_config.yml` too: it is the tagline under the app's name.
 - [ ] **Write the privacy policy** and confirm `maksforge.com/<repo>/privacy-policy`
       serves it. Play requires a *hosted* URL, and an offline app has no server of its own.
-- [ ] **Answer the Console's App content pages and write [`play-app-content.md`](play-app-content.md)
-      in the same sitting** — the reasons are in front of you then and gone a week later. It moves in
-      the same commit as the privacy policy, every time. Re-read *Target audience* after the content
-      rating is submitted.
+- [x] **Answer the Console's App content pages and write [`play-app-content.md`](play-app-content.md)**
+      — answered and recorded 2026-11-13; re-read *Data safety* against the first uploaded build.
 - [ ] **`LICENSE` and `README.md`.** Bootstrap wrote a source-available notice and a *Contributing*
       that refuses pull requests, or with `--licence reserved` a notice that grants nothing and a
       placeholder. Keep both or replace both; they must agree.
@@ -90,9 +88,8 @@ close. Whenever `APP_SCHEMA_VERSION` changes, all five hold before the release g
       list `only-me-Tester`, every closed test the group `testers-community@googlegroups.com` —
       never a per-app group or list. **The first closed release of a never-published app is made in
       the Console**; the workflow takes over after its approval ([`RELEASING.md`](RELEASING.md)).
-- [ ] **Decide the `applicationId` deliberately.** It is fixed the moment the Play entry is created —
-      not renameable, not transferable without losing every install and review. A new MaksForge app
-      is `com.maksforge.<app>`.
+- [x] **Decide the `applicationId` deliberately.** `com.maksforge.plainlight`, fixed by the Play entry
+      created 2026-11-13.
 
 ## The tip — open until a real purchase is consumed
 

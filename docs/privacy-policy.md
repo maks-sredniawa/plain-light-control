@@ -5,27 +5,19 @@ title: Privacy Policy
 
 # Privacy Policy
 
-_Last updated: <date>_
+_Last updated: 2026-11-13_
 
-<!--
-    **This is a template with real structure, not boilerplate to paste unread.** Play requires a
-    *hosted* privacy policy URL and an offline app has no server of its own, which is why this repo
-    carries a `docs/_config.yml` — maksforge.com serves this file for nothing.
-
-    The part people get wrong is the last section. An app that stores everything locally still has
-    things happening around it that a policy has to be honest about, and Play's Data safety form
-    asks about them separately. Go through each and delete what does not apply.
--->
-
-<App name> is an Android app for <one line>. This policy describes what the app does with the
-information you put into it. It is short because the app does very little.
+Plain Light is an Android app for switching and dimming Bluetooth ceiling lights whose own app is
+only in Chinese. This policy describes what the app does with the information you put into it. It is
+short because the app does very little.
 
 ## The app collects nothing
 
-<App name> has no account, no sign-in, and no server. Nothing you enter is transmitted anywhere.
+Plain Light has no account, no sign-in, and no server. The app does not have the internet
+permission, so nothing you enter is transmitted anywhere.
 
-Everything you record is stored **only in the app's private storage on your own device**, and is
-readable only by the app.
+Everything the app keeps (your lights, their names, scenes and settings) is stored **only in the
+app's private storage on your own device**, and is readable only by the app.
 
 There is no analytics, no crash reporting, no advertising, and no third-party SDK that phones home.
 The Google Play Billing library, which handles tips, carries usage logging of its own; without the
@@ -35,15 +27,17 @@ The Google Play Billing library, which handles tips, carries usage logging of it
 
 - **Nearby devices (Bluetooth).** Lets the app send commands to your lights. Your lights only
   listen, so the app broadcasts short Bluetooth signals and never scans for, connects to or reads
-  from any device. It does not use your location. On Android 11 and older this is granted with the
+  from any device. Like the light's own remote, those signals can be picked up by any Bluetooth
+  device in range; they carry only the command and a pairing number the app made up at random,
+  nothing about you. It does not use your location. On Android 11 and older this is granted with the
   app rather than asked for.
 - **Google Play billing.** Lets the app ask the Google Play app for the price of a tip and open its
   payment sheet. It gives the app nothing about you.
 
-## The two things that happen outside the app
+## The three things that happen outside the app
 
-These are done by the operating system or by Google, not by <app name>, but they are the honest
-answer to "where could my data be":
+These are done by the operating system, by Google or by you, not by Plain Light, but they are the
+honest answer to "where could my data be":
 
 1. **Android's automatic backup.** If it is enabled on your phone, Android backs up the app's data
    to your own Google Drive, in a space that does not count against your storage quota and that
@@ -61,6 +55,11 @@ answer to "where could my data be":
    and postcode, and the model of your phone — and your city, in the few countries where the developer
    rather than Google is the seller — but not your name or payment details. The developer uses them
    only for accounting.
+3. **An email you choose to send.** *Report a problem*, *Suggest a feature* and *Something read
+   wrong?* open your own email app with a draft addressed to the developer. The draft fills in the
+   app version, Android version, phone model and language, and nothing you have kept in the app.
+   You can read and change every line, and nothing is sent unless you send it from your email app.
+   The developer uses what you send only to answer you and fix the app.
 
 ## Children
 
@@ -68,8 +67,9 @@ The app is not directed at children and collects nothing from anyone.
 
 ## Deleting your data
 
-Uninstalling the app removes everything it stored. There is nowhere else to delete it from, because
-there is nowhere else it went.
+Uninstalling the app removes everything it stored on your phone. The only other copy is the one in
+Android's backup, if you have it on, and that is kept and deleted by Android under your Google
+account's backup settings. The app itself sends nothing anywhere else.
 
 ## Changes
 
