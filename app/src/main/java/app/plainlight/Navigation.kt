@@ -29,6 +29,7 @@ import app.plainlight.ui.settings.SettingsScreen
 import app.plainlight.ui.support.LicenceTextScreen
 import app.plainlight.ui.support.LicencesScreen
 import app.plainlight.ui.support.SupportScreen
+import app.plainlight.ui.support.TipSection
 
 /**
  * What every back-stack entry is wrapped in — above all, **one `ViewModelStore` per entry**.
@@ -131,7 +132,11 @@ fun MainNavigation(modifier: Modifier = Modifier) {
                         )
                     }
                     entry<Support> {
-                        SupportScreen(onBack = { backStack.removeLastOrNull() })
+                        SupportScreen(
+                            onBack = { backStack.removeLastOrNull() },
+                            onOpenCredits = { backStack.add(Licences) },
+                            tip = { TipSection() },
+                        )
                     }
                     entry<Licences> {
                         LicencesScreen(
