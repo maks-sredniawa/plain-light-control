@@ -5,16 +5,6 @@ fact that would change it**. The Console shows what was answered but never why, 
 when the app changes, when the questionnaire changes, and once a year. A re-declaration made from
 memory a year from now is how a true answer turns false.
 
-<!--
-    A template with real structure. Every section below is a page the Console will make you answer
-    before a closed release, and the answers are pre-filled for the template *as shipped*: no
-    network, no account, no ads, everything on the device. Delete what your app does not
-    have, re-reason what it adds, and date every answer the day you give it in the Console.
-
-    The first app built from this template wrote this file in its fifth phase, after `DOD.md` had
-    carried it as owed since before the first upload. Writing it while you fill in the Console is
-    cheaper: the reasons are in front of you then, and gone a week later.
--->
 
 Two rules keep this file honest:
 
@@ -52,21 +42,21 @@ safety and advertising-ID answers rest on.
 
 ## Ads
 
-**No.** Answered _<date>_.
+**No.** Answered 2026-11-13.
 
 Would change: any ad SDK, ever. `AD_ID` absent from the artifact is the check that would catch one
 arriving through a dependency.
 
 ## App access
 
-**All functionality is available without special access.** Answered _<date>_. The Console now calls
+**All functionality is available without special access.** Answered 2026-11-13 (*No* to "is any part restricted"). A reviewer without the lamp sees the empty Lights list and every screen around it; the lamp is hardware, not an access restriction. The Console now calls
 this page *Sign-in details*.
 
 There is no account and no sign-in. Would change: a feature behind a login.
 
 ## Content rating
 
-**The IARC questionnaire.** Answered _<date>_, category _<category>_, rating contact
+**The IARC questionnaire.** Answered 2026-11-13, category *All other app types*, rating contact
 `plain-light-control.support@maksforge.com` — the listing's address, so there is one address to keep alive, not two. Every
 question answered No gives Everyone (ESRB) and PEGI 3.
 
@@ -81,6 +71,10 @@ at PEGI 3, ESRB Everyone, USK 0 and 3+ elsewhere, with an *In-app purchases* not
 ClassInd at 14+**, which it gives any app selling digital goods. Expect the same, and decide before
 submitting that a tip is worth it; deleting the tip is the only answer that keeps Brazil at L.
 
+**Result, 2026-11-13:** PEGI 3, ESRB Everyone, USK all ages, IARC 3+, Google Play 3+, each with an
+*In-app purchases* notice, and ClassInd **14+**. Every question No except *digital goods* (Yes) and
+its loot-box follow-up (No). The tip was kept knowing this (owner, 2026-11-11).
+
 In the Console the questionnaire shows one section at a time, and *Next* stays disabled until
 *Save* has been pressed. With managed publishing off, saving the summary sends it for review at once.
 
@@ -91,7 +85,7 @@ Play's surface rather than the app's.
 
 ## Target audience and content
 
-**18 and over** _(or your answer)_. Answered _<date>_.
+**18 and over.** Answered 2026-11-13.
 
 Would change: lowering it. Any age band under 18 brings in the Families policy and its design and
 SDK requirements.
@@ -102,7 +96,7 @@ higher"* before any rating existed.
 
 ## Government, financial and health features
 
-**No to all three** _(or your answer)_. Answered _<date>_.
+**No to all three.** Answered 2026-11-13: not a government app, *My app doesn't provide any financial features*, *My app does not have any health features*.
 
 Health is the one to guard, for an app anywhere near wellbeing. **Keep health claims out of the
 listing, the site and the tags** — Play's enforcement has treated a linked page as part of the
@@ -110,7 +104,7 @@ listing. Would change: copy or a tag that sells the app as good for you.
 
 ## Data safety
 
-**No data collected. No data shared.** Answered _<date>_ against versionCode _.
+**No data collected. No data shared.** Answered 2026-11-13, before any build was uploaded; re-read it against the first uploaded versionCode.
 
 Play's definitions, from its Data safety help page (support.google.com, answer 10787469) — re-read
 them at each re-declaration rather than trusting this quote:
@@ -159,7 +153,7 @@ Would change any of it:
 ## Advertising ID
 
 **No.** The artifact carries no `com.google.android.gms.permission.AD_ID`, and `aab-permissions.py`
-forbids it. Answered _<date>_.
+forbids it. Answered 2026-11-13.
 
 ## Foreground service permissions
 
@@ -174,8 +168,8 @@ captures no audio, so say so in the declaration if the service's job is a sound.
 
 ## Store settings (not App content, recorded here because it is asked for the same reason)
 
-- **Category:** _<category>_, and why not the obvious neighbour.
-- **Tags:** _<tags>_.
+- **Category:** *House & home* (2026-11-13): it controls the lights in someone's home. Not *Tools*, which is for utilities that work on the phone itself.
+- **Tags:** none chosen.
 - **Contact email:** `plain-light-control.support@maksforge.com`, public on the listing and the same address
   `ui/support/SupportConfig.kt` compiles in. The Console field changes without a release; the app's copy needs
   one.
