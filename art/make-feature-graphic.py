@@ -43,7 +43,7 @@ ART = Path(__file__).parent
 # Edit them; everything else is layout. Translate from the English, per docs/translator-brief.md.
 APP_NAME = "Plain Light"
 COPY = {
-    None: ("Your ceiling light, in your language", "Private  ·  Offline  ·  No ads  ·  Free"),
+    None: ("Your ceiling light, in English or Polish", "Private  ·  Offline  ·  No ads  ·  Free"),
     "pl": ("Twoje światło sufitowe po polsku", "Prywatnie  ·  Offline  ·  Bez reklam  ·  Za darmo"),
 }
 BACKGROUND = ART / "feature-background.png"

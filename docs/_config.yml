@@ -15,7 +15,7 @@ remote_theme: maks-sredniawa/pages-theme
 plugins:
   - jekyll-remote-theme
 title: Plain Light
-description: One app, in your own language, for smart lights whose own app is only in Chinese.
+description: Switch and dim Bluetooth ceiling lights whose own app is only in Chinese, in English or Polish.
 maksforge:
   icon: /assets/icons/plain-light-control.webp
   status: building
