@@ -24,11 +24,12 @@ val ktlintRules =
 spotless {
     kotlin {
         target("**/*.kt")
-        targetExclude("**/build/**/*.kt")
+        targetExclude("**/build/**/*.kt", ".worktrees/**")
         ktlint(libs.versions.ktlint.get()).editorConfigOverride(ktlintRules)
     }
     kotlinGradle {
         target("**/*.gradle.kts")
+        targetExclude(".worktrees/**")
         ktlint(libs.versions.ktlint.get()).editorConfigOverride(ktlintRules)
     }
 }
